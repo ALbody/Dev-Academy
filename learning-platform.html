@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevAcademy — Frontend Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --surface3: #22223a;
+    --border: #2a2a45;
+    --accent: #ff6b35;
+    --accent2: #7c3aed;
+    --accent3: #06d6a0;
+    --accent4: #ffd60a;
+    --text: #e8e8f0;
+    --text2: #9090b0;
+    --text3: #5a5a80;
+    --sidebar-w: 300px;
+    --header-h: 60px;
+    --radius: 10px;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── ONBOARDING ─── */
+  #onboarding {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0;
+  }
+  .ob-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px 64px;
+    max-width: 520px; width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ob-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+  .ob-logo {
+    font-family: var(--font-display);
+    font-size: 2.4rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .ob-tagline { color: var(--text2); font-size: 0.95rem; margin-bottom: 40px; }
+  .ob-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 10px; text-align: left; }
+  .ob-input {
+    width: 100%; padding: 14px 18px;
+    background: var(--surface2); border: 1.5px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+    font-family: var(--font-body); font-size: 1rem;
+    outline: none; transition: border-color .2s;
+    margin-bottom: 24px;
+  }
+  .ob-input:focus { border-color: var(--accent); }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius);
+    padding: 14px 36px; font-family: var(--font-display);
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,.35); }
+  .ob-tracks { display: flex; gap: 12px; margin-bottom: 28px; }
+  .track-chip {
+    flex: 1; padding: 14px 10px; border-radius: var(--radius);
+    border: 1.5px solid var(--border); background: var(--surface2);
+    cursor: pointer; transition: all .2s; text-align: center;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    color: var(--text2);
+  }
+  .track-chip:hover, .track-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(255,107,53,.08); }
+  .track-chip .track-icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+
+  /* ─── HEADER ─── */
+  #header {
+    height: var(--header-h); min-height: var(--header-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; gap: 20px; z-index: 100;
+    flex-shrink: 0;
+  }
+  .header-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; color: var(--accent); }
+  .header-center { display: flex; align-items: center; gap: 16px; flex: 1; justify-content: center; }
+  .xp-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .xp-level {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff; font-family: var(--font-display); font-weight: 700;
+    font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+  }
+  .xp-bar-outer { width: 140px; height: 8px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
+  .xp-bar-inner { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; transition: width .5s; }
+  .xp-text { font-size: 0.75rem; color: var(--text2); white-space: nowrap; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .student-name { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; color: var(--text2); }
+  .btn-sidebar {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text2); padding: 8px 12px; cursor: pointer; font-size: 1.1rem;
+    transition: all .2s;
+  }
+  .btn-sidebar:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ─── LAYOUT ─── */
+  #app { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+  /* ─── SIDEBAR ─── */
+  #sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transition: margin-left .3s;
+    flex-shrink: 0;
+  }
+  #sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-w)); }
+  .sidebar-search {
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .search-input {
+    width: 100%; padding: 9px 14px;
+    background: var(--surface2); border: 1.5px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+    font-family: var(--font-body); font-size: 0.85rem; outline: none;
+    transition: border-color .2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .sidebar-progress {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .prog-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text3); margin-bottom: 6px; }
+  .prog-bar-outer { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+  .prog-bar-inner { height: 100%; background: linear-gradient(90deg, var(--accent3), var(--accent2)); border-radius: 3px; transition: width .5s; }
+  .prog-pct { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--accent3); margin-top: 5px; }
+  .sidebar-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .course-header {
+    padding: 10px 14px 6px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--accent); cursor: pointer; user-select: none;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .course-header .ch-arrow { transition: transform .25s; font-size: 0.7rem; color: var(--text3); }
+  .course-header.open .ch-arrow { transform: rotate(90deg); }
+  .module-block { padding-left: 8px; }
+  .module-header {
+    padding: 7px 14px; font-size: 0.8rem; font-weight: 600;
+    color: var(--text2); cursor: pointer; user-select: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: color .2s;
+  }
+  .module-header:hover { color: var(--text); }
+  .module-header .mh-arrow { font-size: 0.65rem; transition: transform .25s; }
+  .module-header.open .mh-arrow { transform: rotate(90deg); }
+  .lesson-list { padding-left: 12px; }
+  .lesson-item {
+    padding: 7px 14px; font-size: 0.82rem; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    border-radius: 6px; margin: 1px 4px;
+    color: var(--text2); transition: all .15s;
+    position: relative;
+  }
+  .lesson-item:hover { background: var(--surface2); color: var(--text); }
+  .lesson-item.active { background: rgba(255,107,53,.12); color: var(--accent); }
+  .lesson-item.active::before {
+    content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+    width: 3px; background: var(--accent); border-radius: 0 2px 2px 0;
+  }
+  .lesson-dot {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; transition: all .2s;
+  }
+  .lesson-dot.done { background: var(--accent3); border-color: var(--accent3); color: #fff; }
+  .lesson-dot.active { border-color: var(--accent); }
+
+  /* ─── MAIN CONTENT ─── */
+  #main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ─── LESSON VIEW ─── */
+  #lesson-view { flex: 1; display: none; flex-direction: column; }
+  #lesson-view.active { display: flex; }
+  .lesson-hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 36px 24px;
+  }
+  .lesson-breadcrumb { font-size: 0.75rem; color: var(--text3); margin-bottom: 10px; }
+  .lesson-title { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; line-height: 1.2; }
+  .lesson-meta { display: flex; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+  .meta-tag {
+    font-size: 0.72rem; padding: 4px 12px; border-radius: 20px;
+    font-family: var(--font-display); font-weight: 600; letter-spacing: .04em;
+  }
+  .tag-xp { background: rgba(255,214,10,.12); color: var(--accent4); border: 1px solid rgba(255,214,10,.25); }
+  .tag-type { background: rgba(124,58,237,.12); color: #a78bfa; border: 1px solid rgba(124,58,237,.25); }
+  .tag-diff { background: rgba(6,214,160,.12); color: var(--accent3); border: 1px solid rgba(6,214,160,.25); }
+  .lesson-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  .lesson-left {
+    padding: 28px 32px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+  }
+  .lesson-left::-webkit-scrollbar { width: 4px; }
+  .lesson-left::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .lesson-right {
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .section-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+    color: var(--accent); margin-bottom: 14px; letter-spacing: .02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .explanation { line-height: 1.75; color: var(--text2); font-size: 0.9rem; margin-bottom: 24px; }
+  .explanation p { margin-bottom: 12px; }
+  .explanation code {
+    font-family: var(--font-mono); font-size: 0.82em;
+    background: var(--surface3); padding: 2px 7px; border-radius: 4px; color: var(--accent3);
+  }
+  .explanation strong { color: var(--text); }
+  .example-block {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 24px;
+  }
+  .example-header {
+    padding: 8px 14px; background: var(--surface3);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .example-header span { color: var(--accent3); }
+  .example-code { padding: 14px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text); overflow-x: auto; white-space: pre; }
+  .task-block {
+    background: rgba(124,58,237,.06); border: 1px solid rgba(124,58,237,.2);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px;
+  }
+  .task-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: #a78bfa; margin-bottom: 8px; }
+  .task-desc { font-size: 0.87rem; color: var(--text2); line-height: 1.65; }
+  .notes-area {
+    margin-top: 20px;
+  }
+  .notes-textarea {
+    width: 100%; min-height: 80px; padding: 12px 14px;
+    background: var(--surface2); border: 1.5px solid var(--border);
+    border-radius: var(--radius); color: var(--text2);
+    font-family: var(--font-body); font-size: 0.85rem; resize: vertical; outline: none;
+    transition: border-color .2s;
+  }
+  .notes-textarea:focus { border-color: var(--accent2); }
+
+  /* ─── EDITOR PANEL ─── */
+  .editor-panel {
+    display: flex; flex-direction: column;
+    background: var(--surface2); flex: 1;
+    border-bottom: 1px solid var(--border);
+  }
+  .editor-tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    background: var(--surface); flex-shrink: 0;
+  }
+  .editor-tab {
+    padding: 10px 18px; font-family: var(--font-mono); font-size: 0.78rem;
+    color: var(--text3); cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all .15s; user-select: none;
+  }
+  .editor-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .editor-actions {
+    display: flex; gap: 8px; padding: 8px 12px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    flex-shrink: 0; align-items: center;
+  }
+  .btn-run {
+    background: var(--accent3); color: #000;
+    border: none; border-radius: 6px;
+    padding: 7px 18px; font-family: var(--font-display);
+    font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-run:hover { opacity: .85; }
+  .btn-check {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 7px 18px; font-family: var(--font-display);
+    font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-check:hover { opacity: .85; }
+  .btn-reset {
+    background: transparent; color: var(--text3);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 14px; font-family: var(--font-display);
+    font-size: 0.8rem; cursor: pointer; transition: all .15s; margin-left: auto;
+  }
+  .btn-reset:hover { color: var(--text); border-color: var(--text2); }
+  .cm-wrap { flex: 1; overflow: hidden; min-height: 0; }
+  .cm-wrap .CodeMirror {
+    height: 100% !important; font-family: var(--font-mono) !important;
+    font-size: 13px !important; background: #1e1e2e !important;
+  }
+  .preview-panel {
+    height: 180px; background: #fff; flex-shrink: 0;
+    border-top: 1px solid var(--border); overflow: hidden;
+  }
+  .preview-panel iframe { width: 100%; height: 100%; border: none; }
+  .preview-label {
+    padding: 6px 12px; background: var(--surface);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--text3);
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  }
+  .live-dot { width: 7px; height: 7px; background: var(--accent3); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+
+  /* ─── FEEDBACK ─── */
+  .feedback-strip {
+    padding: 10px 16px; font-size: 0.83rem; font-family: var(--font-mono);
+    border-top: 1px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px; min-height: 42px;
+  }
+  .feedback-strip.correct { background: rgba(6,214,160,.08); color: var(--accent3); }
+  .feedback-strip.partial { background: rgba(255,214,10,.08); color: var(--accent4); }
+  .feedback-strip.error { background: rgba(255,107,53,.08); color: var(--accent); }
+  .feedback-strip.idle { color: var(--text3); }
+
+  /* ─── QUIZ VIEW ─── */
+  #quiz-view { flex: 1; display: none; flex-direction: column; padding: 36px; overflow-y: auto; }
+  #quiz-view.active { display: flex; }
+  .quiz-header { margin-bottom: 32px; }
+  .quiz-header h2 { font-family: var(--font-display); font-weight: 800; font-size: 1.8rem; }
+  .quiz-header p { color: var(--text2); margin-top: 8px; }
+  .quiz-question {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px 28px; margin-bottom: 20px;
+  }
+  .q-num { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 10px; }
+  .q-text { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; margin-bottom: 18px; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option {
+    padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--border);
+    cursor: pointer; transition: all .15s; font-size: 0.88rem; color: var(--text2);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .q-option:hover:not(.selected):not(.correct):not(.wrong) { border-color: var(--accent2); color: var(--text); }
+  .q-option.selected { border-color: var(--accent2); color: var(--text); background: rgba(124,58,237,.08); }
+  .q-option.correct { border-color: var(--accent3); background: rgba(6,214,160,.1); color: var(--accent3); }
+  .q-option.wrong { border-color: var(--accent); background: rgba(255,107,53,.08); color: var(--accent); }
+  .q-radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; transition: all .15s; }
+  .q-option.selected .q-radio { border-color: var(--accent2); background: var(--accent2); }
+  .q-option.correct .q-radio { border-color: var(--accent3); background: var(--accent3); }
+  .q-option.wrong .q-radio { border-color: var(--accent); background: var(--accent); }
+  .btn-submit-quiz {
+    background: var(--accent2); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 14px 36px; font-family: var(--font-display);
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: opacity .15s; margin-top: 16px; display: inline-block;
+  }
+  .btn-submit-quiz:hover { opacity: .85; }
+  .quiz-result {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 28px; margin-top: 20px; display: none; text-align: center;
+  }
+  .quiz-result.show { display: block; }
+  .qr-score { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--accent3); }
+  .qr-msg { color: var(--text2); margin-top: 8px; }
+  .btn-next-lesson {
+    display: inline-block; margin-top: 20px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 12px 28px; font-family: var(--font-display);
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .btn-next-lesson:hover { opacity: .85; }
+
+  /* ─── CERTIFICATE ─── */
+  #cert-view { flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 36px; }
+  #cert-view.active { display: flex; }
+  .cert-card {
+    background: var(--surface);
+    border: 2px solid var(--accent4);
+    border-radius: 20px; padding: 60px 72px; max-width: 700px; width: 100%;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cert-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, var(--accent4), var(--accent), var(--accent2));
+  }
+  .cert-badge { font-size: 4rem; margin-bottom: 20px; }
+  .cert-title { font-family: var(--font-display); font-weight: 800; font-size: 0.85rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+  .cert-main { font-family: var(--font-display); font-weight: 800; font-size: 2.2rem; color: var(--text); margin: 16px 0; }
+  .cert-student { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--accent4); margin: 12px 0; }
+  .cert-course { color: var(--text2); font-size: 1.05rem; margin-bottom: 24px; }
+  .cert-grade { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--accent3); margin: 16px 0; }
+  .cert-date { color: var(--text3); font-size: 0.85rem; margin-top: 20px; }
+  .btn-dl-cert {
+    margin-top: 24px; background: var(--accent4); color: #000;
+    border: none; border-radius: 10px;
+    padding: 13px 30px; font-family: var(--font-display);
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: opacity .15s; display: inline-block;
+  }
+  .btn-dl-cert:hover { opacity: .85; }
+
+  /* ─── DASHBOARD ─── */
+  #dashboard { flex: 1; display: none; flex-direction: column; padding: 32px 36px; overflow-y: auto; }
+  #dashboard.active { display: flex; }
+  .dash-greeting { font-family: var(--font-display); font-weight: 800; font-size: 2rem; margin-bottom: 6px; }
+  .dash-sub { color: var(--text2); margin-bottom: 32px; }
+  .dash-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 22px;
+  }
+  .stat-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 8px; }
+  .stat-val { font-family: var(--font-display); font-weight: 800; font-size: 2rem; }
+  .stat-val.orange { color: var(--accent); }
+  .stat-val.purple { color: #a78bfa; }
+  .stat-val.green { color: var(--accent3); }
+  .stat-val.yellow { color: var(--accent4); }
+  .dash-courses h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 16px; }
+  .course-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .course-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 22px; cursor: pointer;
+    transition: all .2s; position: relative; overflow: hidden;
+  }
+  .course-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+  .cc-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+  .cc-title { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+  .cc-desc { font-size: 0.82rem; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+  .cc-progress-label { font-size: 0.72rem; color: var(--text3); margin-bottom: 6px; }
+  .cc-bar-outer { height: 5px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+  .cc-bar-inner { height: 100%; border-radius: 3px; transition: width .5s; }
+  .cc-bar-html { background: linear-gradient(90deg, #ff6b35, #ff9a3c); }
+  .cc-bar-css { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .cc-bar-js { background: linear-gradient(90deg, #ffd60a, #f59e0b); }
+  .cc-start {
+    margin-top: 16px; display: inline-block;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.78rem;
+    color: var(--accent); letter-spacing: .04em;
+  }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9998;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 20px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+    display: none; align-items: center; gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    animation: slidein .3s ease;
+    max-width: 320px;
+  }
+  #toast.show { display: flex; }
+  @keyframes slidein { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 260px; }
+    .lesson-body { grid-template-columns: 1fr; }
+    .lesson-left { border-right: none; border-bottom: 1px solid var(--border); max-height: 45vh; }
+    .lesson-right { min-height: 55vh; }
+  }
+  @media (max-width: 640px) {
+    #sidebar { position: fixed; left: 0; top: var(--header-h); bottom: 0; z-index: 200; }
+    .ob-card { padding: 36px 28px; }
+    .ob-tracks { flex-direction: column; }
+    .dash-stats { grid-template-columns: 1fr 1fr; }
+    .lesson-hero { padding: 18px 18px 14px; }
+    .lesson-left { padding: 18px; }
+    #dashboard { padding: 20px; }
+    #quiz-view { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+  <div class="ob-card">
+    <div class="ob-logo">DevAcademy</div>
+    <p class="ob-tagline">Master Frontend Development — One lesson at a time.</p>
+    <div class="ob-label">Your Name</div>
+    <input class="ob-input" id="name-input" type="text" placeholder="Enter your name..." autocomplete="off">
+    <div class="ob-label">Choose Your Starting Track</div>
+    <div class="ob-tracks">
+      <div class="track-chip active" data-track="html">
+        <span class="track-icon">🌐</span>HTML
+      </div>
+      <div class="track-chip" data-track="css">
+        <span class="track-icon">🎨</span>CSS
+      </div>
+      <div class="track-chip" data-track="js">
+        <span class="track-icon">⚡</span>JavaScript
+      </div>
+    </div>
+    <button class="btn-primary" id="start-btn">Start Learning →</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="header" style="display:none">
+  <div class="header-logo">DevAcademy</div>
+  <div class="header-center">
+    <div class="xp-bar-wrap">
+      <span class="xp-level" id="level-badge">Lvl 1</span>
+      <div class="xp-bar-outer"><div class="xp-bar-inner" id="xp-bar" style="width:0%"></div></div>
+      <span class="xp-text" id="xp-text">0 / 100 XP</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="student-name" id="student-label"></span>
+    <button class="btn-sidebar" id="toggle-sidebar" title="Toggle sidebar">☰</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="sidebar-search">
+      <input class="search-input" id="search-input" type="text" placeholder="🔍 Search lessons...">
+    </div>
+    <div class="sidebar-progress">
+      <div class="prog-label">Overall Progress</div>
+      <div class="prog-bar-outer"><div class="prog-bar-inner" id="prog-bar" style="width:0%"></div></div>
+      <div class="prog-pct" id="prog-pct">0% Complete</div>
+    </div>
+    <div class="sidebar-nav" id="sidebar-nav"></div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="active">
+      <div class="dash-greeting" id="dash-greeting">Welcome back!</div>
+      <p class="dash-sub">Pick up where you left off or explore a new topic.</p>
+      <div class="dash-stats" id="dash-stats"></div>
+      <div class="dash-courses">
+        <h3>Your Courses</h3>
+        <div class="course-cards" id="course-cards"></div>
+      </div>
+    </div>
+    <!-- LESSON VIEW -->
+    <div id="lesson-view">
+      <div class="lesson-hero">
+        <div class="lesson-breadcrumb" id="lesson-breadcrumb"></div>
+        <div class="lesson-title" id="lesson-title"></div>
+        <div class="lesson-meta" id="lesson-meta"></div>
+      </div>
+      <div class="lesson-body">
+        <div class="lesson-left" id="lesson-left"></div>
+        <div class="lesson-right">
+          <div class="editor-panel">
+            <div class="editor-tabs" id="editor-tabs"></div>
+            <div class="editor-actions">
+              <button class="btn-run" id="btn-run">▶ Run</button>
+              <button class="btn-check" id="btn-check">✓ Check</button>
+              <button class="btn-reset" id="btn-reset">↺ Reset</button>
+            </div>
+            <div class="cm-wrap" id="cm-wrap"></div>
+            <div class="feedback-strip idle" id="feedback">
+              💡 Write your code and click Check to validate.
+            </div>
+          </div>
+          <div class="preview-label"><div class="live-dot"></div> Preview</div>
+          <div class="preview-panel"><iframe id="preview-frame" sandbox="allow-scripts"></iframe></div>
+        </div>
+      </div>
+    </div>
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view">
+      <div class="quiz-header">
+        <h2 id="quiz-title"></h2>
+        <p id="quiz-subtitle"></p>
+      </div>
+      <div id="quiz-questions"></div>
+      <button class="btn-submit-quiz" id="btn-submit-quiz">Submit Answers</button>
+      <div class="quiz-result" id="quiz-result">
+        <div class="qr-score" id="qr-score"></div>
+        <div class="qr-msg" id="qr-msg"></div>
+        <button class="btn-next-lesson" id="btn-after-quiz">Continue →</button>
+      </div>
+    </div>
+    <!-- CERT VIEW -->
+    <div id="cert-view">
+      <div class="cert-card" id="cert-card">
+        <div class="cert-badge">🏆</div>
+        <div class="cert-title">Certificate of Completion</div>
+        <div class="cert-main" id="cert-course-name"></div>
+        <p style="color:var(--text2);margin-bottom:4px;">Awarded to</p>
+        <div class="cert-student" id="cert-student"></div>
+        <div class="cert-course" id="cert-course-desc"></div>
+        <div class="cert-grade" id="cert-grade"></div>
+        <div class="cert-date" id="cert-date"></div>
+      </div>
+      <button class="btn-dl-cert" id="btn-dl-cert">⬇ Download Certificate</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CURRICULUM DATA
+// ══════════════════════════════════════════════════════
+const CURRICULUM = {
+  html: {
+    id: 'html', title: 'HTML Fundamentals', icon: '🌐',
+    desc: 'Learn to structure web pages with semantic HTML5.',
+    color: 'cc-bar-html',
+    modules: [
+      {
+        id: 'html-m1', title: 'Introduction to HTML',
+        lessons: [
+          {
+            id: 'html-l1', title: 'What is HTML?', type: 'Lesson', diff: 'Beginner', xp: 20,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p><strong>HTML</strong> (HyperText Markup Language) is the backbone of every web page. It provides the <strong>structure and meaning</strong> to your content using elements called <em>tags</em>.</p><p>Think of HTML as the skeleton of a building — CSS is the paint and decoration, JavaScript is the electricity and plumbing.</p><p>HTML documents begin with a <code>&lt;!DOCTYPE html&gt;</code> declaration followed by an <code>&lt;html&gt;</code> root element.</p>`,
+            example: `<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <title>My Page</title>\n  </head>\n  <body>\n    <h1>Hello, World!</h1>\n    <p>This is my first paragraph.</p>\n  </body>\n</html>`,
+            task: 'Create a valid HTML page with a <code>&lt;!DOCTYPE html&gt;</code>, an <code>&lt;html&gt;</code> root, a <code>&lt;head&gt;</code> with a <code>&lt;title&gt;</code>, and a <code>&lt;body&gt;</code> containing an <code>&lt;h1&gt;</code> heading.',
+            starterCode: `<!-- Write your HTML page here -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const checks = [
+                c.includes('<!doctype html>'),
+                c.includes('<html'),
+                c.includes('<head>'),
+                c.includes('<title>') && c.includes('</title>'),
+                c.includes('<body>'),
+                c.includes('<h1>') && c.includes('</h1>'),
+              ];
+              const passed = checks.filter(Boolean).length;
+              if (passed === 6) return { status: 'correct', msg: '✅ Perfect! Your first valid HTML page is complete!' };
+              if (passed >= 4) return { status: 'partial', msg: `⚠️ Good progress! Missing: ${[
+                '!DOCTYPE html', '<html>', '<head>', '<title>', '<body>', '<h1>'
+              ].filter((_,i)=>!checks[i]).join(', ')}` };
+              return { status: 'error', msg: '❌ Keep going! Make sure to include all required HTML elements.' };
+            }
+          },
+          {
+            id: 'html-l2', title: 'Headings & Paragraphs', type: 'Lesson', diff: 'Beginner', xp: 20,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>HTML provides <strong>six heading levels</strong> (<code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>), with <code>&lt;h1&gt;</code> being the most important. Paragraphs are wrapped in <code>&lt;p&gt;</code> tags.</p><p>Headings create <strong>document hierarchy</strong> — search engines and screen readers rely on this structure. Always use one <code>&lt;h1&gt;</code> per page as your main title.</p>`,
+            example: `<h1>Main Title</h1>\n<h2>Section Heading</h2>\n<h3>Subsection</h3>\n<p>This is a paragraph. Text can be <strong>bold</strong> or <em>italic</em>.</p>\n<p>A second paragraph with more content.</p>`,
+            task: 'Write HTML that includes an <code>&lt;h1&gt;</code>, at least one <code>&lt;h2&gt;</code>, and two <code>&lt;p&gt;</code> tags.',
+            starterCode: `<!-- Add your headings and paragraphs -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const h1 = c.includes('<h1>') && c.includes('</h1>');
+              const h2 = c.includes('<h2>') && c.includes('</h2>');
+              const pCount = (c.match(/<p>/g) || []).length;
+              if (h1 && h2 && pCount >= 2) return { status: 'correct', msg: '✅ Excellent! Headings and paragraphs mastered!' };
+              if (h1 || h2 || pCount >= 1) return { status: 'partial', msg: '⚠️ Need: ' + [!h1&&'<h1>',!h2&&'<h2>',pCount<2&&'2x <p>'].filter(Boolean).join(', ') };
+              return { status: 'error', msg: '❌ Add an h1, h2, and two paragraph tags.' };
+            }
+          },
+          {
+            id: 'html-l3', title: 'Module Quiz', type: 'Quiz', diff: 'Beginner', xp: 30,
+            quiz: [
+              { q: 'What does HTML stand for?', options: ['HyperText Markup Language','HyperText Making Language','High-Transfer Markup Language','HyperText Modern Layout'], correct: 0 },
+              { q: 'Which tag creates the largest heading?', options: ['<h6>','<heading>','<h1>','<big>'], correct: 2 },
+              { q: 'Which element wraps the visible content of a page?', options: ['<head>','<main>','<html>','<body>'], correct: 3 },
+              { q: 'What does DOCTYPE declaration do?', options: ['Creates a document','Tells the browser the HTML version','Links CSS files','Adds meta data'], correct: 1 },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'html-m2', title: 'Links, Images & Lists',
+        lessons: [
+          {
+            id: 'html-l4', title: 'Hyperlinks', type: 'Lesson', diff: 'Beginner', xp: 25,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>Links are created with the <code>&lt;a&gt;</code> (anchor) element. The <code>href</code> attribute specifies the destination URL.</p><p>Use <code>target="_blank"</code> to open in a new tab. The <code>rel="noopener noreferrer"</code> attribute is a security best practice when doing so.</p>`,
+            example: `<a href="https://example.com">Visit Example</a>\n<a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>\n<a href="#section">Jump to section</a>`,
+            task: 'Create two anchor tags: one linking to any external URL, and one that opens in a new tab using <code>target="_blank"</code>.',
+            starterCode: `<!-- Write your anchor tags here -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasAnchor = (c.match(/<a /g) || []).length >= 2;
+              const hasHref = (c.match(/href=/g) || []).length >= 2;
+              const hasNewTab = c.includes('target="_blank"') || c.includes("target='_blank'");
+              if (hasAnchor && hasHref && hasNewTab) return { status: 'correct', msg: '✅ Perfect links! Both anchors are correct.' };
+              if (hasAnchor || hasHref) return { status: 'partial', msg: '⚠️ Close! Remember: 2 anchor tags, both with href, one with target="_blank"' };
+              return { status: 'error', msg: '❌ Create <a href="..."> tags. One needs target="_blank".' };
+            }
+          },
+          {
+            id: 'html-l5', title: 'Images', type: 'Lesson', diff: 'Beginner', xp: 25,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>Images are embedded with the <strong>self-closing</strong> <code>&lt;img&gt;</code> tag. Required attributes are <code>src</code> (source URL) and <code>alt</code> (alternative text for accessibility).</p><p>The <code>alt</code> attribute is not optional — it helps screen readers and displays when the image fails to load.</p>`,
+            example: `<img src="https://placekitten.com/300/200" alt="A cute kitten" width="300" height="200">\n<img src="logo.png" alt="Company logo">`,
+            task: 'Add an image with a valid <code>src</code>, a descriptive <code>alt</code> attribute, and <code>width</code> and <code>height</code> attributes.',
+            starterCode: `<!-- Add your img tag here -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasImg = c.includes('<img');
+              const hasSrc = c.includes('src=');
+              const hasAlt = c.includes('alt=');
+              const hasDims = c.includes('width=') && c.includes('height=');
+              if (hasImg && hasSrc && hasAlt && hasDims) return { status: 'correct', msg: '✅ Great image tag! All attributes present.' };
+              if (hasImg && hasSrc && hasAlt) return { status: 'partial', msg: '⚠️ Good! Add width and height attributes too.' };
+              if (hasImg && hasSrc) return { status: 'partial', msg: '⚠️ Remember the alt attribute for accessibility!' };
+              return { status: 'error', msg: '❌ Add an <img> tag with src and alt attributes.' };
+            }
+          },
+          {
+            id: 'html-l6', title: 'Lists', type: 'Lesson', diff: 'Beginner', xp: 25,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>HTML has two main list types: <strong>Unordered lists</strong> (<code>&lt;ul&gt;</code>) use bullet points, while <strong>Ordered lists</strong> (<code>&lt;ol&gt;</code>) are numbered. Both use <code>&lt;li&gt;</code> for each item. Lists can also be <strong>nested</strong>.</p>`,
+            example: `<ul>\n  <li>Apples</li>\n  <li>Bananas</li>\n  <li>Cherries</li>\n</ul>\n<ol>\n  <li>First step</li>\n  <li>Second step</li>\n  <li>Third step</li>\n</ol>`,
+            task: 'Create one <code>&lt;ul&gt;</code> with 3 items AND one <code>&lt;ol&gt;</code> with 3 items.',
+            starterCode: `<!-- Create your lists here -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const ulItems = (c.match(/<ul[\s>]/g)||[]).length >= 1;
+              const olItems = (c.match(/<ol[\s>]/g)||[]).length >= 1;
+              const liCount = (c.match(/<li>/g)||[]).length;
+              if (ulItems && olItems && liCount >= 6) return { status: 'correct', msg: '✅ Lists complete! Both ul and ol with 3 items each.' };
+              if (ulItems || olItems) return { status: 'partial', msg: `⚠️ Have ${liCount} <li> items. Need both <ul> and <ol> with 3 items each.` };
+              return { status: 'error', msg: '❌ Create a <ul> and an <ol>, each with 3 <li> items.' };
+            }
+          },
+          {
+            id: 'html-l7', title: 'Module Quiz', type: 'Quiz', diff: 'Beginner', xp: 30,
+            quiz: [
+              { q: 'Which attribute specifies the URL of a link?', options: ['src','link','url','href'], correct: 3 },
+              { q: 'What attribute is required on all images for accessibility?', options: ['title','alt','caption','desc'], correct: 1 },
+              { q: 'Which tag creates an ordered (numbered) list?', options: ['<ul>','<list>','<ol>','<dl>'], correct: 2 },
+              { q: 'How do you open a link in a new tab?', options: ['tab="_new"','target="_blank"','open="new"','window="_blank"'], correct: 1 },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'html-m3', title: 'Forms & Tables',
+        lessons: [
+          {
+            id: 'html-l8', title: 'HTML Forms', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>Forms collect user input. The <code>&lt;form&gt;</code> element wraps input fields. Key elements include <code>&lt;input&gt;</code>, <code>&lt;label&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>, and <code>&lt;button&gt;</code>.</p><p>Always associate <code>&lt;label&gt;</code> with inputs using the <code>for</code> and <code>id</code> attributes — this is essential for accessibility.</p>`,
+            example: `<form action="/submit" method="POST">\n  <label for="name">Name:</label>\n  <input type="text" id="name" name="name" required>\n\n  <label for="email">Email:</label>\n  <input type="email" id="email" name="email">\n\n  <button type="submit">Send</button>\n</form>`,
+            task: 'Build a contact form with a text input for name, an email input for email, a textarea for message, and a submit button. Each input must have a matching label.',
+            starterCode: `<!-- Build your form here -->\n<form>\n\n</form>`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasForm = c.includes('<form');
+              const hasText = c.includes('type="text"') || c.includes("type='text'");
+              const hasEmail = c.includes('type="email"') || c.includes("type='email'");
+              const hasTextarea = c.includes('<textarea');
+              const hasLabel = (c.match(/<label/g)||[]).length >= 2;
+              const hasSubmit = c.includes('type="submit"') || c.includes('type=\'submit\'') || (c.includes('<button') && !c.includes('type='));
+              const score = [hasForm, hasText, hasEmail, hasTextarea, hasLabel, hasSubmit].filter(Boolean).length;
+              if (score === 6) return { status: 'correct', msg: '✅ Excellent form! All elements correctly implemented.' };
+              if (score >= 4) return { status: 'partial', msg: '⚠️ Almost there! Check: text input, email input, textarea, labels, submit button.' };
+              return { status: 'error', msg: '❌ Build a <form> with text, email inputs, textarea, labels, and submit button.' };
+            }
+          },
+          {
+            id: 'html-l9', title: 'HTML Tables', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'htmlmixed', editorTabs: ['HTML'],
+            explanation: `<p>Tables are for displaying tabular data. Use <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tr&gt;</code> (row), <code>&lt;th&gt;</code> (header cell), and <code>&lt;td&gt;</code> (data cell).</p><p>Add a <code>&lt;caption&gt;</code> element to describe the table's purpose. This improves accessibility significantly.</p>`,
+            example: `<table>\n  <caption>Monthly Budget</caption>\n  <thead>\n    <tr>\n      <th>Category</th>\n      <th>Amount</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Food</td>\n      <td>$300</td>\n    </tr>\n  </tbody>\n</table>`,
+            task: 'Create a table with a <code>&lt;thead&gt;</code> containing at least 2 header cells, and a <code>&lt;tbody&gt;</code> with at least 2 data rows.',
+            starterCode: `<!-- Create your table here -->\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasTable = c.includes('<table');
+              const hasThead = c.includes('<thead>');
+              const hasTbody = c.includes('<tbody>');
+              const thCount = (c.match(/<th/g)||[]).length;
+              const trCount = (c.match(/<tr>/g)||[]).length;
+              if (hasTable && hasThead && hasTbody && thCount >= 2 && trCount >= 3) return { status: 'correct', msg: '✅ Table structure is perfect!' };
+              if (hasTable && (hasThead || hasTbody)) return { status: 'partial', msg: '⚠️ Add both <thead> and <tbody>, with 2+ <th> and 2+ data rows.' };
+              return { status: 'error', msg: '❌ Build a <table> with <thead> and <tbody> sections.' };
+            }
+          },
+          {
+            id: 'html-l10', title: 'Final HTML Assessment', type: 'Quiz', diff: 'Intermediate', xp: 60,
+            isFinal: true,
+            quiz: [
+              { q: 'Which HTML5 element represents the main content area of a document?', options: ['<content>','<main>','<section>','<article>'], correct: 1 },
+              { q: 'What attribute makes an input field required?', options: ['mandatory','must-fill','required','validate'], correct: 2 },
+              { q: 'Which element is used to group table header cells?', options: ['<header>','<head>','<thead>','<th-group>'], correct: 2 },
+              { q: 'What is the correct way to create a checkbox input?', options: ['<input type="check">','<input type="checkbox">','<checkbox>','<input check>'], correct: 1 },
+              { q: 'Which attribute on <img> provides text for screen readers?', options: ['title','description','alt','aria-text'], correct: 2 },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  css: {
+    id: 'css', title: 'CSS Styling', icon: '🎨',
+    desc: 'Make beautiful web designs with modern CSS.',
+    color: 'cc-bar-css',
+    modules: [
+      {
+        id: 'css-m1', title: 'CSS Basics',
+        lessons: [
+          {
+            id: 'css-l1', title: 'Selectors & Properties', type: 'Lesson', diff: 'Beginner', xp: 20,
+            mode: 'css', editorTabs: ['CSS'],
+            explanation: `<p>CSS (Cascading Style Sheets) styles your HTML. A CSS rule has a <strong>selector</strong> and a <strong>declaration block</strong> containing property-value pairs.</p><p>Common selectors: <code>element</code>, <code>.class</code>, <code>#id</code>, and combinations like <code>p.intro</code>.</p>`,
+            example: `/* Element selector */\nh1 { color: navy; font-size: 2rem; }\n\n/* Class selector */\n.highlight { background-color: yellow; }\n\n/* ID selector */\n#header { background: #333; color: white; }`,
+            task: 'Write CSS that targets <code>body</code> (set background-color), <code>h1</code> (set color and font-size), and a class selector <code>.box</code> (set any 2 properties).',
+            starterCode: `/* Write your CSS rules here */\n\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasBody = c.includes('body') && c.includes('background');
+              const hasH1 = c.includes('h1') && (c.includes('color') || c.includes('font-size'));
+              const hasClass = c.includes('.box') || c.includes('.container') || c.includes('.highlight');
+              if (hasBody && hasH1 && hasClass) return { status: 'correct', msg: '✅ Great CSS! Selectors and properties mastered.' };
+              if (hasBody || hasH1) return { status: 'partial', msg: '⚠️ Need: body{background}, h1{color/font-size}, and a .class selector.' };
+              return { status: 'error', msg: '❌ Write rules for body, h1, and a class selector.' };
+            }
+          },
+          {
+            id: 'css-l2', title: 'The Box Model', type: 'Lesson', diff: 'Beginner', xp: 25,
+            mode: 'css', editorTabs: ['CSS'],
+            explanation: `<p>Every HTML element is a box. The <strong>CSS Box Model</strong> consists of: <strong>content</strong> → <strong>padding</strong> → <strong>border</strong> → <strong>margin</strong> (from inside out).</p><p>Use <code>box-sizing: border-box</code> to make width calculations include padding and border — this is the modern standard.</p>`,
+            example: `.card {\n  width: 300px;\n  padding: 20px;\n  border: 2px solid #333;\n  margin: 16px auto;\n  box-sizing: border-box;\n}`,
+            task: 'Write a <code>.card</code> class with explicit <code>padding</code>, <code>margin</code>, <code>border</code>, and <code>box-sizing: border-box</code>.',
+            starterCode: `/* Style the .card class */\n\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasCard = c.includes('.card');
+              const hasPadding = c.includes('padding');
+              const hasMargin = c.includes('margin');
+              const hasBorder = c.includes('border');
+              const hasBBox = c.includes('box-sizing') && c.includes('border-box');
+              if (hasCard && hasPadding && hasMargin && hasBorder && hasBBox) return { status: 'correct', msg: '✅ Box model mastered! All properties correct.' };
+              if (hasCard && (hasPadding || hasMargin || hasBorder)) return { status: 'partial', msg: '⚠️ Almost! Need: .card with padding, margin, border, AND box-sizing:border-box.' };
+              return { status: 'error', msg: '❌ Create a .card rule with padding, margin, border, box-sizing.' };
+            }
+          },
+          {
+            id: 'css-l3', title: 'Module Quiz', type: 'Quiz', diff: 'Beginner', xp: 25,
+            quiz: [
+              { q: 'What does CSS stand for?', options: ['Creative Style Syntax','Cascading Style Sheets','Computer Style System','Cascading System Sheets'], correct: 1 },
+              { q: 'Which property sets the space INSIDE an element border?', options: ['margin','spacing','padding','gap'], correct: 2 },
+              { q: 'What value of box-sizing includes border and padding in the width?', options: ['content-box','include-box','border-box','full-box'], correct: 2 },
+              { q: 'How do you select all elements with class "card"?', options: ['card','#card','.card','*card'], correct: 2 },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'css-m2', title: 'Layout with Flexbox & Grid',
+        lessons: [
+          {
+            id: 'css-l4', title: 'Flexbox Layout', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'css', editorTabs: ['CSS'],
+            explanation: `<p>Flexbox is a one-dimensional layout system. Set <code>display: flex</code> on a container and its children become flex items.</p><p>Key properties: <code>justify-content</code> (main axis), <code>align-items</code> (cross axis), <code>flex-wrap</code>, <code>gap</code>. On children: <code>flex</code>, <code>order</code>.</p>`,
+            example: `.nav {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 16px;\n  flex-wrap: wrap;\n}\n\n.nav-item { flex: 1; }`,
+            task: 'Write a <code>.container</code> CSS rule using Flexbox with <code>justify-content</code>, <code>align-items</code>, and <code>gap</code> properties.',
+            starterCode: `/* Create your Flexbox layout */\n\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasFlex = c.includes('display: flex') || c.includes('display:flex');
+              const hasJustify = c.includes('justify-content');
+              const hasAlign = c.includes('align-items');
+              const hasGap = c.includes('gap');
+              if (hasFlex && hasJustify && hasAlign && hasGap) return { status: 'correct', msg: '✅ Flexbox champion! All properties set correctly.' };
+              if (hasFlex && (hasJustify || hasAlign)) return { status: 'partial', msg: '⚠️ Add justify-content, align-items, AND gap to your flex container.' };
+              return { status: 'error', msg: '❌ Start with display: flex, then add justify-content, align-items, gap.' };
+            }
+          },
+          {
+            id: 'css-l5', title: 'CSS Grid Layout', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'css', editorTabs: ['CSS'],
+            explanation: `<p>CSS Grid is a two-dimensional layout system. Use <code>display: grid</code> with <code>grid-template-columns</code> and <code>grid-template-rows</code> to define structure.</p><p>The <code>fr</code> unit distributes available space fractionally. <code>repeat()</code> and <code>minmax()</code> are powerful shorthand functions.</p>`,
+            example: `.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: auto;\n  gap: 24px;\n}\n\n.feature-card {\n  grid-column: span 2;\n}`,
+            task: 'Create a <code>.grid</code> layout with <code>display: grid</code>, <code>grid-template-columns</code> using <code>repeat()</code> or <code>fr</code> units, and a <code>gap</code>.',
+            starterCode: `/* Create your Grid layout */\n\n`,
+            validate: (code) => {
+              const c = code.toLowerCase();
+              const hasGrid = c.includes('display: grid') || c.includes('display:grid');
+              const hasCols = c.includes('grid-template-columns');
+              const hasFrOrRepeat = c.includes('fr') || c.includes('repeat(');
+              const hasGap = c.includes('gap');
+              if (hasGrid && hasCols && hasFrOrRepeat && hasGap) return { status: 'correct', msg: '✅ Grid layout mastered! Clean, modern layout.' };
+              if (hasGrid && hasCols) return { status: 'partial', msg: '⚠️ Use fr units or repeat() in grid-template-columns, and add gap.' };
+              return { status: 'error', msg: '❌ Use display: grid with grid-template-columns and gap.' };
+            }
+          },
+          {
+            id: 'css-l6', title: 'Final CSS Assessment', type: 'Quiz', diff: 'Intermediate', xp: 60,
+            isFinal: true,
+            quiz: [
+              { q: 'Which CSS property creates a flexible container?', options: ['display: inline','display: flex','position: flex','layout: flex'], correct: 1 },
+              { q: 'What does the "fr" unit represent in CSS Grid?', options: ['Fixed ratio','Fraction of available space','Frame rate','Float right'], correct: 1 },
+              { q: 'Which property aligns flex items along the cross axis?', options: ['justify-content','flex-align','align-items','cross-align'], correct: 2 },
+              { q: 'How do you make a grid with 3 equal columns?', options: ['grid-cols: 3','grid-template-columns: 1fr 1fr 1fr','columns: 3fr','grid: equal(3)'], correct: 1 },
+              { q: 'Which property controls spacing BETWEEN flex/grid items?', options: ['margin','gutter','padding','gap'], correct: 3 },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  js: {
+    id: 'js', title: 'JavaScript Essentials', icon: '⚡',
+    desc: 'Build interactive, dynamic web experiences.',
+    color: 'cc-bar-js',
+    modules: [
+      {
+        id: 'js-m1', title: 'JS Fundamentals',
+        lessons: [
+          {
+            id: 'js-l1', title: 'Variables & Data Types', type: 'Lesson', diff: 'Beginner', xp: 20,
+            mode: 'javascript', editorTabs: ['JS'],
+            explanation: `<p>JavaScript has three variable declarations: <code>var</code> (legacy), <code>let</code> (reassignable), and <code>const</code> (constant). Prefer <code>const</code> by default, use <code>let</code> when reassignment is needed.</p><p>Core data types: <strong>string</strong>, <strong>number</strong>, <strong>boolean</strong>, <strong>null</strong>, <strong>undefined</strong>, <strong>object</strong>, <strong>array</strong>.</p>`,
+            example: `const name = "Alice";   // string\nconst age = 25;         // number\nconst active = true;    // boolean\nlet score = 0;          // reassignable\n\nconst colors = ['red', 'green', 'blue']; // array\nconst user = { name: 'Alice', age: 25 }; // object\n\nconsole.log(typeof name); // "string"`,
+            task: 'Declare a <code>const</code> string, a <code>const</code> number, a <code>let</code> boolean, and an array with at least 3 items. Log them all with <code>console.log()</code>.',
+            starterCode: `// Declare your variables here\n\n`,
+            validate: (code) => {
+              const c = code;
+              const hasConst = (c.match(/const /g)||[]).length >= 2;
+              const hasLet = c.includes('let ');
+              const hasArray = c.includes('[') && c.includes(']');
+              const hasLog = c.includes('console.log');
+              if (hasConst && hasLet && hasArray && hasLog) return { status: 'correct', msg: '✅ Variables declared correctly!' };
+              if (hasConst || hasLet) return { status: 'partial', msg: '⚠️ Need: 2+ const, 1 let, an array, and console.log().' };
+              return { status: 'error', msg: '❌ Declare const, let variables, an array, and use console.log().' };
+            }
+          },
+          {
+            id: 'js-l2', title: 'Functions', type: 'Lesson', diff: 'Beginner', xp: 25,
+            mode: 'javascript', editorTabs: ['JS'],
+            explanation: `<p>Functions are reusable blocks of code. JavaScript has <strong>function declarations</strong>, <strong>function expressions</strong>, and modern <strong>arrow functions</strong>.</p><p>Arrow functions (<code>=></code>) have a concise syntax and don't bind their own <code>this</code> — great for callbacks.</p>`,
+            example: `// Declaration\nfunction greet(name) {\n  return "Hello, " + name + "!";\n}\n\n// Arrow function\nconst add = (a, b) => a + b;\n\n// With body\nconst multiply = (x, y) => {\n  const result = x * y;\n  return result;\n};\n\nconsole.log(greet("Alice")); // Hello, Alice!\nconsole.log(add(3, 4));       // 7`,
+            task: 'Write a regular function <code>greet(name)</code> that returns a greeting string, AND an arrow function <code>add(a, b)</code> that returns the sum. Call both and log results.',
+            starterCode: `// Write your functions here\n\n`,
+            validate: (code) => {
+              const c = code;
+              const hasFunction = c.includes('function ');
+              const hasArrow = c.includes('=>');
+              const hasReturn = c.includes('return');
+              const hasLog = c.includes('console.log');
+              if (hasFunction && hasArrow && hasReturn && hasLog) return { status: 'correct', msg: '✅ Functions mastered! Both syntax styles used.' };
+              if (hasFunction || hasArrow) return { status: 'partial', msg: '⚠️ Write both a regular function and an arrow function.' };
+              return { status: 'error', msg: '❌ Create a regular function and an arrow function with return statements.' };
+            }
+          },
+          {
+            id: 'js-l3', title: 'Module Quiz', type: 'Quiz', diff: 'Beginner', xp: 25,
+            quiz: [
+              { q: 'Which keyword declares a block-scoped, reassignable variable?', options: ['var','const','let','set'], correct: 2 },
+              { q: 'What does this arrow function return: `const double = x => x * 2`?', options: ['Nothing','x times 2','x plus 2','x divided by 2'], correct: 1 },
+              { q: 'What is the output of: `typeof []`?', options: ['"array"','"list"','"object"','"undefined"'], correct: 2 },
+              { q: 'Which statement is true about `const`?', options: ['Cannot be reassigned','Cannot be used in functions','Creates a global variable','Is the same as var'], correct: 0 },
+            ]
+          }
+        ]
+      },
+      {
+        id: 'js-m2', title: 'DOM & Events',
+        lessons: [
+          {
+            id: 'js-l4', title: 'DOM Manipulation', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'javascript', editorTabs: ['JS'],
+            explanation: `<p>The <strong>Document Object Model</strong> (DOM) is a tree of HTML elements that JavaScript can read and modify. Use methods like <code>querySelector()</code>, <code>getElementById()</code>, and properties like <code>textContent</code>, <code>innerHTML</code>, <code>classList</code>.</p>`,
+            example: `// Select elements\nconst title = document.querySelector('h1');\nconst btn = document.getElementById('myBtn');\n\n// Modify content\ntitle.textContent = "Updated Title";\ntitle.style.color = 'blue';\n\n// Create elements\nconst div = document.createElement('div');\ndiv.classList.add('box');\ndocument.body.appendChild(div);`,
+            task: 'Write JS that uses <code>querySelector</code> or <code>getElementById</code>, changes an element\'s <code>textContent</code>, modifies a <code>style</code> property, and calls <code>classList.add()</code>.',
+            starterCode: `// DOM manipulation code here\n// (This runs in a conceptual context)\n\n`,
+            validate: (code) => {
+              const c = code;
+              const hasQuery = c.includes('querySelector') || c.includes('getElementById');
+              const hasText = c.includes('textContent') || c.includes('innerHTML');
+              const hasStyle = c.includes('.style.');
+              const hasClass = c.includes('classList');
+              if (hasQuery && hasText && hasStyle && hasClass) return { status: 'correct', msg: '✅ DOM manipulation skills confirmed!' };
+              if (hasQuery && (hasText || hasStyle)) return { status: 'partial', msg: '⚠️ Also add style modification and classList.add().' };
+              return { status: 'error', msg: '❌ Use querySelector, change textContent, modify style, and use classList.' };
+            }
+          },
+          {
+            id: 'js-l5', title: 'Event Listeners', type: 'Lesson', diff: 'Intermediate', xp: 35,
+            mode: 'javascript', editorTabs: ['JS'],
+            explanation: `<p>Events allow JavaScript to react to user interactions. Use <code>addEventListener(event, callback)</code> on DOM elements. Common events: <code>click</code>, <code>input</code>, <code>submit</code>, <code>keydown</code>, <code>mouseover</code>.</p><p>The callback receives an <code>event</code> object with details like <code>event.target</code> and <code>event.preventDefault()</code>.</p>`,
+            example: `const btn = document.querySelector('#btn');\n\nbtn.addEventListener('click', (event) => {\n  console.log('Clicked!', event.target);\n  event.target.textContent = 'Clicked!';\n});\n\ndocument.querySelector('input')\n  .addEventListener('input', (e) => {\n    console.log('Value:', e.target.value);\n  });`,
+            task: 'Write code that adds a <code>click</code> event listener to an element, and separately an <code>input</code> event listener. Use <code>event.target</code> in both callbacks.',
+            starterCode: `// Add your event listeners here\n\n`,
+            validate: (code) => {
+              const c = code;
+              const hasAddListener = (c.match(/addEventListener/g)||[]).length >= 2;
+              const hasClick = c.includes("'click'") || c.includes('"click"');
+              const hasInput = c.includes("'input'") || c.includes('"input"');
+              const hasEventTarget = c.includes('event.target') || c.includes('e.target');
+              if (hasAddListener && hasClick && hasInput && hasEventTarget) return { status: 'correct', msg: '✅ Event listeners wired up correctly!' };
+              if (hasAddListener && (hasClick || hasInput)) return { status: 'partial', msg: '⚠️ Add both click and input listeners, using event.target.' };
+              return { status: 'error', msg: '❌ Use addEventListener for both click and input events.' };
+            }
+          },
+          {
+            id: 'js-l6', title: 'Final JS Assessment', type: 'Quiz', diff: 'Intermediate', xp: 60,
+            isFinal: true,
+            quiz: [
+              { q: 'What method selects the first matching CSS element?', options: ['getElementById','querySelector','getElement','selectElement'], correct: 1 },
+              { q: 'How do you add a CSS class to a DOM element?', options: ['element.addStyle()','element.class.add()','element.classList.add()','element.css.add()'], correct: 2 },
+              { q: 'What event fires when an input value changes?', options: ['"change" only','"modify"','"input"','"keypress"'], correct: 2 },
+              { q: 'What is `event.preventDefault()` used for?', options: ['Stops event bubbling','Removes the element','Prevents default browser behavior','Pauses JavaScript'], correct: 2 },
+              { q: 'Which method creates a new HTML element?', options: ['document.newElement()','document.createElement()','document.addElement()','document.buildElement()'], correct: 1 },
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════════════
+//  APP STATE
+// ══════════════════════════════════════════════════════
+let state = {
+  studentName: '',
+  currentTrack: 'html',
+  currentLesson: null,
+  completedLessons: {},
+  xp: 0,
+  notes: {},
+  attempts: {},
+  quizAnswers: {},
+  certScores: {},
+};
+
+function saveState() {
+  try { localStorage.setItem('devacademy_state', JSON.stringify(state)); } catch(e){}
+}
+function loadState() {
+  try {
+    const s = localStorage.getItem('devacademy_state');
+    if (s) state = { ...state, ...JSON.parse(s) };
+  } catch(e){}
+}
+loadState();
+
+// ══════════════════════════════════════════════════════
+//  XP / LEVEL
+// ══════════════════════════════════════════════════════
+const LEVELS = [
+  {min:0,max:100,label:'Novice'},
+  {min:100,max:250,label:'Apprentice'},
+  {min:250,max:500,label:'Developer'},
+  {min:500,max:800,label:'Engineer'},
+  {min:800,max:1200,label:'Architect'},
+  {min:1200,max:Infinity,label:'Master'},
+];
+
+function getLevel(xp) {
+  for (let i = LEVELS.length-1; i >= 0; i--) {
+    if (xp >= LEVELS[i].min) return { num: i+1, ...LEVELS[i] };
+  }
+  return { num: 1, ...LEVELS[0] };
+}
+
+function updateXPDisplay() {
+  const lv = getLevel(state.xp);
+  const progress = ((state.xp - lv.min) / (lv.max - lv.min)) * 100;
+  document.getElementById('level-badge').textContent = `Lvl ${lv.num} · ${lv.label}`;
+  document.getElementById('xp-bar').style.width = Math.min(100, progress) + '%';
+  document.getElementById('xp-text').textContent = `${state.xp} XP`;
+}
+
+// ══════════════════════════════════════════════════════
+//  PROGRESS
+// ══════════════════════════════════════════════════════
+function getTotalLessons() {
+  let t = 0;
+  Object.values(CURRICULUM).forEach(c => c.modules.forEach(m => { t += m.lessons.length; }));
+  return t;
+}
+function getCompletedCount() { return Object.keys(state.completedLessons).length; }
+
+function updateProgressDisplay() {
+  const total = getTotalLessons();
+  const done = getCompletedCount();
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = `${pct}% Complete`;
+}
+
+// ══════════════════════════════════════════════════════
+//  SIDEBAR BUILD
+// ══════════════════════════════════════════════════════
+function buildSidebar(filter = '') {
+  const nav = document.getElementById('sidebar-nav');
+  nav.innerHTML = '';
+  const fl = filter.toLowerCase();
+
+  Object.values(CURRICULUM).forEach(course => {
+    const courseEl = document.createElement('div');
+    const isOpen = true;
+    const ch = document.createElement('div');
+    ch.className = 'course-header' + (isOpen ? ' open' : '');
+    ch.innerHTML = `${course.icon} ${course.title} <span class="ch-arrow">▶</span>`;
+    ch.onclick = () => {
+      ch.classList.toggle('open');
+      moduleBlock.style.display = ch.classList.contains('open') ? '' : 'none';
+    };
+    courseEl.appendChild(ch);
+
+    const moduleBlock = document.createElement('div');
+    moduleBlock.className = 'module-block';
+
+    course.modules.forEach(mod => {
+      const filteredLessons = mod.lessons.filter(l => !fl || l.title.toLowerCase().includes(fl));
+      if (fl && filteredLessons.length === 0) return;
+
+      const mh = document.createElement('div');
+      mh.className = 'module-header open';
+      mh.innerHTML = `<span class="mh-arrow">▶</span>${mod.title}`;
+      const ll = document.createElement('div');
+      ll.className = 'lesson-list';
+      mh.onclick = () => {
+        mh.classList.toggle('open');
+        ll.style.display = mh.classList.contains('open') ? '' : 'none';
+      };
+      moduleBlock.appendChild(mh);
+
+      filteredLessons.forEach(lesson => {
+        const li = document.createElement('div');
+        const done = !!state.completedLessons[lesson.id];
+        const active = state.currentLesson?.id === lesson.id;
+        li.className = `lesson-item${active ? ' active' : ''}`;
+        li.innerHTML = `<div class="lesson-dot${done ? ' done' : (active ? ' active' : '')}">${done ? '✓' : ''}</div>${lesson.title}`;
+        li.onclick = () => openLesson(lesson.id);
+        ll.appendChild(li);
+      });
+      moduleBlock.appendChild(ll);
+    });
+
+    courseEl.appendChild(moduleBlock);
+    nav.appendChild(courseEl);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  CODEMIROR INSTANCE
+// ══════════════════════════════════════════════════════
+let cmEditor = null;
+
+function initEditor(mode, value) {
+  const wrap = document.getElementById('cm-wrap');
+  wrap.innerHTML = '';
+  const ta = document.createElement('textarea');
+  wrap.appendChild(ta);
+  if (cmEditor) { try { cmEditor.toTextArea(); } catch(e){} }
+  cmEditor = CodeMirror.fromTextArea(ta, {
+    mode: mode === 'javascript' ? 'javascript' : mode === 'css' ? 'css' : 'htmlmixed',
+    theme: 'dracula',
+    lineNumbers: true,
+    autoCloseBrackets: true,
+    autoCloseTags: true,
+    lineWrapping: false,
+    tabSize: 2,
+    indentWithTabs: false,
+    extraKeys: { 'Ctrl-Enter': () => runCode(), 'Cmd-Enter': () => runCode() },
+  });
+  cmEditor.setValue(value || '');
+  setTimeout(() => cmEditor.refresh(), 50);
+}
+
+// ══════════════════════════════════════════════════════
+//  LESSON RENDER
+// ══════════════════════════════════════════════════════
+function findLesson(id) {
+  for (const c of Object.values(CURRICULUM)) {
+    for (const m of c.modules) {
+      for (const l of m.lessons) {
+        if (l.id === id) return { lesson: l, course: c, module: m };
+      }
+    }
+  }
+  return null;
+}
+
+function openLesson(id) {
+  const found = findLesson(id);
+  if (!found) return;
+  const { lesson, course, module } = found;
+  state.currentLesson = lesson;
+  saveState();
+
+  if (lesson.type === 'Quiz' || lesson.type === 'Final') {
+    openQuiz(lesson, course);
+    return;
+  }
+
+  showView('lesson');
+  document.getElementById('lesson-breadcrumb').textContent = `${course.icon} ${course.title} / ${module.title}`;
+  document.getElementById('lesson-title').textContent = lesson.title;
+  document.getElementById('lesson-meta').innerHTML = `
+    <span class="meta-tag tag-xp">⚡ ${lesson.xp} XP</span>
+    <span class="meta-tag tag-type">${lesson.type}</span>
+    <span class="meta-tag tag-diff">${lesson.diff}</span>
+  `;
+
+  // Left panel
+  const left = document.getElementById('lesson-left');
+  left.innerHTML = `
+    <div class="section-title">📖 Explanation</div>
+    <div class="explanation">${lesson.explanation}</div>
+    <div class="section-title">💻 Example</div>
+    <div class="example-block">
+      <div class="example-header"><span>example.${lesson.mode === 'css' ? 'css' : lesson.mode === 'javascript' ? 'js' : 'html'}</span></div>
+      <div class="example-code">${escapeHtml(lesson.example)}</div>
+    </div>
+    <div class="section-title">🎯 Your Task</div>
+    <div class="task-block">
+      <div class="task-title">Challenge</div>
+      <div class="task-desc">${lesson.task}</div>
+    </div>
+    <div class="notes-area">
+      <div class="section-title" style="margin-bottom:8px">📝 Notes</div>
+      <textarea class="notes-textarea" id="lesson-notes" placeholder="Write your notes here...">${state.notes[lesson.id] || ''}</textarea>
+    </div>
+  `;
+  document.getElementById('lesson-notes').addEventListener('input', e => {
+    state.notes[lesson.id] = e.target.value;
+    saveState();
+  });
+
+  // Editor tabs
+  const tabs = document.getElementById('editor-tabs');
+  tabs.innerHTML = lesson.editorTabs.map((t, i) => `<div class="editor-tab${i===0?' active':''}">${t}</div>`).join('');
+
+  // Init CodeMirror
+  const savedCode = state.attempts[lesson.id] || lesson.starterCode;
+  initEditor(lesson.mode, savedCode);
+  setFeedback('idle', '💡 Write your code and click Check to validate.');
+
+  document.getElementById('btn-run').onclick = runCode;
+  document.getElementById('btn-check').onclick = () => checkCode(lesson);
+  document.getElementById('btn-reset').onclick = () => {
+    if (confirm('Reset code to starter?')) { cmEditor.setValue(lesson.starterCode); runCode(); }
+  };
+
+  // Auto-run preview
+  setTimeout(runCode, 300);
+  buildSidebar();
+  updateProgressDisplay();
+}
+
+function runCode() {
+  const code = cmEditor ? cmEditor.getValue() : '';
+  const lesson = state.currentLesson;
+  if (!lesson) return;
+  if (lesson.id) { state.attempts[lesson.id] = code; saveState(); }
+
+  const frame = document.getElementById('preview-frame');
+  let html = '';
+  if (lesson.mode === 'htmlmixed') {
+    html = code;
+  } else if (lesson.mode === 'css') {
+    html = `<style>${code}</style><div style="padding:16px;font-family:sans-serif"><h1>Heading 1</h1><h2>Heading 2</h2><p>Paragraph text here.</p><div class="card box container">A div element</div><div class="highlight">Highlighted</div><nav class="nav"><span class="nav-item">Nav 1</span><span class="nav-item">Nav 2</span></nav><div class="grid"><div style="background:#eef;padding:8px">Grid Item 1</div><div style="background:#efe;padding:8px">Grid Item 2</div><div style="background:#fee;padding:8px">Grid Item 3</div></div></div>`;
+  } else if (lesson.mode === 'javascript') {
+    html = `<html><body style="font-family:monospace;padding:16px;background:#1e1e2e;color:#cdd6f4"><h1 id="h1" style="color:#89b4fa">Preview Title</h1><p id="para">Paragraph</p><input id="inp" type="text" placeholder="Type here" style="padding:8px;border-radius:4px"><button id="btn" style="padding:8px 16px;border-radius:4px;cursor:pointer;margin-left:8px">Button</button><div id="output" style="margin-top:16px;color:#a6e3a1"></div><script>const _log=console.log;const _out=[];console.log=(...a)=>{_out.push(a.map(x=>JSON.stringify(x)).join(' '));document.getElementById('output').innerHTML='<b>Console:</b><br>'+_out.join('<br>');_log(...a)};try{${code}}catch(e){document.getElementById('output').innerHTML='<span style=color:#f38ba8>Error: '+e.message+'</span>';}<\/script></body></html>`;
+  }
+  try { frame.srcdoc = html; } catch(e){}
+}
+
+function checkCode(lesson) {
+  const code = cmEditor ? cmEditor.getValue() : '';
+  const result = lesson.validate(code);
+  setFeedback(result.status, result.msg);
+  if (result.status === 'correct' && !state.completedLessons[lesson.id]) {
+    state.completedLessons[lesson.id] = true;
+    state.xp += lesson.xp;
+    saveState();
+    updateXPDisplay();
+    updateProgressDisplay();
+    buildSidebar();
+    showToast(`🎉 +${lesson.xp} XP — Lesson Complete!`, 'green');
+  }
+}
+
+function setFeedback(status, msg) {
+  const el = document.getElementById('feedback');
+  el.className = 'feedback-strip ' + status;
+  el.textContent = msg;
+}
+
+// ══════════════════════════════════════════════════════
+//  QUIZ
+// ══════════════════════════════════════════════════════
+let quizState = { lesson: null, answers: {}, submitted: false };
+
+function openQuiz(lesson, course) {
+  quizState = { lesson, course, answers: {}, submitted: false };
+  showView('quiz');
+  document.getElementById('quiz-title').textContent = lesson.title;
+  document.getElementById('quiz-subtitle').textContent = `${course.title} · ${lesson.xp} XP`;
+  document.getElementById('quiz-result').classList.remove('show');
+  document.getElementById('btn-submit-quiz').style.display = '';
+
+  const qContainer = document.getElementById('quiz-questions');
+  qContainer.innerHTML = '';
+
+  lesson.quiz.forEach((q, qi) => {
+    const qEl = document.createElement('div');
+    qEl.className = 'quiz-question';
+    qEl.innerHTML = `
+      <div class="q-num">Question ${qi+1} of ${lesson.quiz.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="opts-${qi}">
+        ${q.options.map((o, oi) => `
+          <div class="q-option" data-qi="${qi}" data-oi="${oi}">
+            <div class="q-radio"></div>${o}
+          </div>`).join('')}
+      </div>`;
+    qContainer.appendChild(qEl);
+  });
+
+  qContainer.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (quizState.submitted) return;
+      const qi = +opt.dataset.qi;
+      const oi = +opt.dataset.oi;
+      quizState.answers[qi] = oi;
+      document.querySelectorAll(`#opts-${qi} .q-option`).forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  document.getElementById('btn-submit-quiz').onclick = submitQuiz;
+  buildSidebar();
+}
+
+function submitQuiz() {
+  const { lesson, course } = quizState;
+  let correct = 0;
+  lesson.quiz.forEach((q, qi) => {
+    const userAnswer = quizState.answers[qi];
+    document.querySelectorAll(`#opts-${qi} .q-option`).forEach((opt, oi) => {
+      if (oi === q.correct) opt.classList.add('correct');
+      else if (oi === userAnswer && userAnswer !== q.correct) opt.classList.add('wrong');
+    });
+    if (userAnswer === q.correct) correct++;
+  });
+  quizState.submitted = true;
+  const score = Math.round((correct / lesson.quiz.length) * 100);
+  const passed = score >= 60;
+
+  document.getElementById('btn-submit-quiz').style.display = 'none';
+  const res = document.getElementById('quiz-result');
+  document.getElementById('qr-score').textContent = `${score}%`;
+  document.getElementById('qr-msg').textContent = passed
+    ? `✅ Passed! You got ${correct}/${lesson.quiz.length} correct. +${lesson.xp} XP earned.`
+    : `❌ Score too low (need 60%). You got ${correct}/${lesson.quiz.length}. Review and retry!`;
+  res.classList.add('show');
+
+  if (passed && !state.completedLessons[lesson.id]) {
+    state.completedLessons[lesson.id] = true;
+    state.xp += lesson.xp;
+    saveState();
+    updateXPDisplay();
+    updateProgressDisplay();
+    showToast(`🏆 +${lesson.xp} XP — Quiz Passed!`, 'purple');
+  }
+
+  if (lesson.isFinal && passed) {
+    state.certScores[course.id] = score;
+    saveState();
+    document.getElementById('btn-after-quiz').textContent = '🏆 Get Certificate →';
+    document.getElementById('btn-after-quiz').onclick = () => showCertificate(course, score);
+  } else {
+    document.getElementById('btn-after-quiz').textContent = 'Continue →';
+    document.getElementById('btn-after-quiz').onclick = () => showView('dashboard');
+  }
+  buildSidebar();
+}
+
+// ══════════════════════════════════════════════════════
+//  CERTIFICATE
+// ══════════════════════════════════════════════════════
+function showCertificate(course, score) {
+  showView('cert');
+  const grade = score >= 90 ? 'A · Distinction' : score >= 75 ? 'B · Merit' : 'C · Pass';
+  document.getElementById('cert-course-name').textContent = course.title;
+  document.getElementById('cert-student').textContent = state.studentName;
+  document.getElementById('cert-course-desc').textContent = `has successfully completed the ${course.title} course`;
+  document.getElementById('cert-grade').textContent = `Grade: ${grade} (${score}%)`;
+  document.getElementById('cert-date').textContent = `Issued: ${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}`;
+
+  document.getElementById('btn-dl-cert').onclick = () => downloadCert(course, score, grade);
+}
+
+function downloadCert(course, score, grade) {
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate</title><style>
+    body{font-family:'Georgia',serif;background:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+    .cert{border:4px solid #ffd60a;border-radius:16px;padding:60px 80px;max-width:700px;text-align:center;position:relative}
+    .cert::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:1px solid #ffd60a;border-radius:12px;pointer-events:none}
+    h1{color:#ff6b35;font-size:2rem;margin-bottom:0} .badge{font-size:4rem;margin:16px 0}
+    .student{font-size:2rem;color:#7c3aed;font-weight:700;margin:12px 0}
+    .grade{color:#06d6a0;font-size:1.3rem;font-weight:700} .date{color:#888;font-size:0.9rem;margin-top:24px}
+  </style></head><body><div class="cert">
+    <div class="badge">🏆</div>
+    <p style="font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;color:#888">Certificate of Completion</p>
+    <h1>${course.title}</h1>
+    <p style="color:#666;margin-bottom:8px">Awarded to</p>
+    <div class="student">${state.studentName}</div>
+    <p style="color:#666">has successfully completed this course</p>
+    <div class="grade">Grade: ${grade} · ${score}%</div>
+    <div class="date">Issued: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+    <div class="date">DevAcademy · Frontend Mastery Program</div>
+  </div></body></html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `certificate-${course.id}-${state.studentName.replace(/\s+/g,'-')}.html`;
+  a.click();
+  showToast('📜 Certificate downloaded!', 'yellow');
+}
+
+// ══════════════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════════════
+function renderDashboard() {
+  document.getElementById('dash-greeting').textContent = `Hey, ${state.studentName}! 👋`;
+  const lv = getLevel(state.xp);
+  const total = getTotalLessons();
+  const done = getCompletedCount();
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Total XP</div><div class="stat-val orange">${state.xp}</div></div>
+    <div class="stat-card"><div class="stat-label">Level</div><div class="stat-val purple">Lvl ${lv.num}</div></div>
+    <div class="stat-card"><div class="stat-label">Lessons Done</div><div class="stat-val green">${done}/${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Certificates</div><div class="stat-val yellow">${Object.keys(state.certScores).length}</div></div>
+  `;
+
+  const cards = document.getElementById('course-cards');
+  cards.innerHTML = '';
+  Object.values(CURRICULUM).forEach(course => {
+    const total = course.modules.reduce((s, m) => s + m.lessons.length, 0);
+    const done = course.modules.reduce((s, m) => s + m.lessons.filter(l => state.completedLessons[l.id]).length, 0);
+    const pct = Math.round((done/total)*100);
+    const firstLesson = course.modules[0].lessons[0];
+
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    card.innerHTML = `
+      <span class="cc-icon">${course.icon}</span>
+      <div class="cc-title">${course.title}</div>
+      <div class="cc-desc">${course.desc}</div>
+      <div class="cc-progress-label">${done}/${total} lessons · ${pct}%</div>
+      <div class="cc-bar-outer"><div class="cc-bar-inner ${course.color}" style="width:${pct}%"></div></div>
+      <span class="cc-start">Continue →</span>
+    `;
+    card.onclick = () => openLesson(firstLesson.id);
+    cards.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  VIEW MANAGEMENT
+// ══════════════════════════════════════════════════════
+function showView(view) {
+  document.getElementById('dashboard').classList.toggle('active', view === 'dashboard');
+  document.getElementById('lesson-view').classList.toggle('active', view === 'lesson');
+  document.getElementById('quiz-view').classList.toggle('active', view === 'quiz');
+  document.getElementById('cert-view').classList.toggle('active', view === 'cert');
+  if (view === 'dashboard') renderDashboard();
+}
+
+// ══════════════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════════════
+function showToast(msg, type = 'green') {
+  const t = document.getElementById('toast');
+  const colors = { green: '#06d6a0', purple: '#a78bfa', yellow: '#ffd60a', orange: '#ff6b35' };
+  t.style.borderColor = colors[type] || colors.green;
+  t.style.color = colors[type] || colors.green;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ══════════════════════════════════════════════════════
+//  ONBOARDING
+// ══════════════════════════════════════════════════════
+let selectedTrack = 'html';
+document.querySelectorAll('.track-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.track-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    selectedTrack = chip.dataset.track;
+  });
+});
+
+document.getElementById('start-btn').addEventListener('click', () => {
+  const name = document.getElementById('name-input').value.trim();
+  if (!name) { document.getElementById('name-input').focus(); return; }
+  state.studentName = name;
+  state.currentTrack = selectedTrack;
+  saveState();
+  launchApp();
+});
+
+document.getElementById('name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('start-btn').click();
+});
+
+// ══════════════════════════════════════════════════════
+//  APP LAUNCH
+// ══════════════════════════════════════════════════════
+function launchApp() {
+  document.getElementById('onboarding').style.display = 'none';
+  document.getElementById('header').style.display = '';
+  document.getElementById('app').style.display = '';
+  document.getElementById('student-label').textContent = state.studentName;
+
+  updateXPDisplay();
+  updateProgressDisplay();
+  buildSidebar();
+  showView('dashboard');
+
+  document.getElementById('toggle-sidebar').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  });
+
+  document.getElementById('search-input').addEventListener('input', e => {
+    buildSidebar(e.target.value);
+  });
+}
+
+// Auto-launch if returning user
+if (state.studentName) {
+  document.getElementById('name-input').value = state.studentName;
+  launchApp();
+}
+</script>
+</body>
+</html>
