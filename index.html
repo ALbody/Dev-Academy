@@ -527,6 +527,39 @@
     #dashboard { padding: 20px; }
     #quiz-view { padding: 20px; }
   }
+  /* الهامش الافتراضي لجميع الأجهزة */
+body {
+    margin: 20px; /* سطح المكتب */
+    font-family: Arial, sans-serif;
+}
+
+/* شاشات متوسطة: التابلت */
+@media only screen and (max-width: 1024px) {
+    body {
+        margin: 15px;
+    }
+}
+
+/* الهواتف الكبيرة (Phablet) */
+@media only screen and (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+}
+
+/* الهواتف الصغيرة */
+@media only screen and (max-width: 480px) {
+    body {
+        margin: 5px;
+    }
+}
+
+/* مثال لتطبيق هوامش داخلية للعناصر */
+.container {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
 </style>
 </head>
 <body>
