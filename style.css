@@ -161,7 +161,7 @@
   .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
   .course-header {
     padding: 10px 14px 6px;
-    font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+    font-family: var(--font-display); font-weight: 500; font-size: 0.78rem;
     text-transform: uppercase; letter-spacing: .1em;
     color: var(--accent); cursor: pointer; user-select: none;
     display: flex; align-items: center; justify-content: space-between;
@@ -199,35 +199,6 @@
   }
   .lesson-dot.done { background: var(--accent3); border-color: var(--accent3); color: #fff; }
   .lesson-dot.active { border-color: var(--accent); }
-
-/* ─── RESPONSIVE FOR SMALL SCREENS ─── */
-@media (max-width: 768px) {
-  #sidebar {
-    position: fixed;
-    top: var(--header-h);
-    left: -100%;
-    width: 240px;
-    height: calc(100vh - var(--header-h));
-    z-index: 2000;
-    transition: left 0.3s;
-  }
-
-  #sidebar.open {
-    left: 0;
-  }
-
-  #app {
-    flex-direction: column;
-  }
-
-  /* تصغير النصوص داخل sidebar */
-  .course-header { font-size: 0.7rem; padding: 8px 12px; }
-  .module-header { font-size: 0.72rem; padding: 6px 12px; }
-  .lesson-item { font-size: 0.75rem; padding: 5px 10px; }
-
-  /* زر هامبرغر يظهر فقط على الشاشات الصغيرة */
-  .btn-sidebar { display: block; }
-}
 
   /* ─── MAIN CONTENT ─── */
   #main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
