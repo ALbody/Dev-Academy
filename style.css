@@ -123,13 +123,6 @@ transition: all .2s;
 /* ─── LAYOUT ─── */
 #app { display: flex; flex: 1; overflow: hidden; position: relative; }
 
-/* ─── Media Query للهواتف ─── */
-@media (max-width: 480px) {
-  #header { flex-direction: column; align-items: flex-start; }
-  .header-center { justify-content: flex-start; width: 100%; }
-  .xp-bar-wrap { width: 100%; }
-}
-
   /* ─── SIDEBAR ─── */
   #sidebar {
     width: var(--sidebar-w); min-width: var(--sidebar-w);
