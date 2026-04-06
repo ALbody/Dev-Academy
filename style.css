@@ -200,24 +200,6 @@
   .lesson-dot.done { background: var(--accent3); border-color: var(--accent3); color: #fff; }
   .lesson-dot.active { border-color: var(--accent); }
 
-/* ↓↓↓ أضف هنا فقط ↓↓↓ */
-@media (max-width: 768px) {
-
-  #sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    margin-left: calc(-1 * var(--sidebar-w));
-    z-index: 1000;
-  }
-
-  #sidebar.open {
-    margin-left: 0;
-  }
-
-}
-
   /* ─── MAIN CONTENT ─── */
   #main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
   #main::-webkit-scrollbar { width: 6px; }
