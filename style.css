@@ -92,8 +92,6 @@
   .track-chip .track-icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
 
   /* ─── HEADER ─── */
-  #header {
-  /* ─── HEADER ─── */
 #header {
   height: var(--header-h); min-height: var(--header-h);
   background: var(--surface);
