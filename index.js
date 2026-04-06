@@ -914,7 +914,7 @@ function launchApp() {
   showView('dashboard');
 
   document.getElementById('toggle-sidebar').addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar').classList.toggle('collapsed');
   });
 
   document.getElementById('search-input').addEventListener('input', e => {
