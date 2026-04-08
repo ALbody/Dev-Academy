@@ -1,154 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BodaAcademy — Frontend Mastery</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boda Academy</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <header>
+    <h1>Boda-Academy 💻</h1>
+    <button class="menu" onclick="toggleSidebar()">☰</button>
+  </header>
 
-<!-- ONBOARDING -->
-<div id="onboarding">
-  <div class="ob-card">
-    <div class="ob-logo">BodaAcademy</div>
-    <p class="ob-tagline">Master Frontend Development — One lesson at a time.</p>
-    <div class="ob-label">Your Name</div>
-    <input class="ob-input" id="name-input" type="text" placeholder="Enter your name..." autocomplete="off">
-    <div class="ob-label">Choose Your Starting Track</div>
-    <div class="ob-tracks">
-      <div class="track-chip active" data-track="html">
-        <span class="track-icon">🌐</span>HTML
-      </div>
-      <div class="track-chip" data-track="css">
-        <span class="track-icon">🎨</span>CSS
-      </div>
-      <div class="track-chip" data-track="js">
-        <span class="track-icon">⚡</span>JavaScript
+  <div class="sidebar" id="sidebar">
+    <h2>الوحدة التعليمية</h2>
+    <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن درس...">
+
+    <div class="section">
+      <div class="section-title" onclick="toggleSection(this)">HTML 📝 <span class="arrow">&#9654;</span></div>
+      <div class="lesson-list">
+        <div onclick="showLesson('lesson1')">درس 1: أساسيات HTML</div>
+        <div onclick="showLesson('lesson2')">درس 2: العناصر والعلامات الأساسية</div>
       </div>
     </div>
-    <button class="btn-primary" id="start-btn">Start Learning →</button>
-  </div>
-</div>
 
-<!-- HEADER -->
-<div id="header" style="display:none">
-  <div class="header-logo">BodaAcademy</div>
-  <div class="header-center">
-    <div class="xp-bar-wrap">
-      <span class="xp-level" id="level-badge">Lvl 1</span>
-      <div class="xp-bar-outer"><div class="xp-bar-inner" id="xp-bar" style="width:0%"></div></div>
-      <span class="xp-text" id="xp-text">0 / 100 XP</span>
+    <div class="section">
+      <div class="section-title" onclick="toggleSection(this)">CSS 🎨 <span class="arrow">&#9654;</span></div>
+      <div class="lesson-list">
+        <div onclick="showLesson('lesson3')">درس 3: تصميم الصفحات باستخدام CSS</div>
+        <div onclick="showLesson('lesson4')">درس 4: التنسيقات النصية والألوان</div>
+      </div>
     </div>
-  </div>
-  <div class="header-right">
-    <span class="student-name" id="student-label"></span>
-    <button class="btn-sidebar" id="toggle-sidebar" title="Toggle sidebar">☰</button>
-  </div>
-</div>
 
-<!-- APP -->
-<div id="app" style="display:none">
-  <!-- SIDEBAR -->
-  <div id="sidebar">
-    <div class="sidebar-search">
-      <input class="search-input" id="search-input" type="text" placeholder="🔍 Search lessons...">
+    <div class="section">
+      <div class="section-title" onclick="toggleSection(this)">JavaScript ⚡ <span class="arrow">&#9654;</span></div>
+      <div class="lesson-list">
+        <div onclick="showLesson('lesson5')">درس 5: أساسيات JavaScript</div>
+        <div onclick="showLesson('lesson6')">درس 6: المتغيرات والشروط</div>
+      </div>
     </div>
-    <div class="sidebar-progress">
-      <div class="prog-label">Overall Progress</div>
-      <div class="prog-bar-outer"><div class="prog-bar-inner" id="prog-bar" style="width:0%"></div></div>
-      <div class="prog-pct" id="prog-pct">0% Complete</div>
+
+    <div class="section">
+      <div class="section-title" onclick="startTest()">اختبار الوحدة 📝</div>
     </div>
-    <div class="sidebar-nav" id="sidebar-nav"></div>
   </div>
 
-  <!-- MAIN -->
-  <div id="main">
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="active">
-      <div class="dash-greeting" id="dash-greeting">Welcome back!</div>
-      <p class="dash-sub">Pick up where you left off or explore a new topic.</p>
-      <div class="dash-stats" id="dash-stats"></div>
-      <div class="dash-courses">
-        <h3>Your Courses</h3>
-        <div class="course-cards" id="course-cards"></div>
+  <div class="main" id="mainContent">
+    <div class="intro" id="intro">
+      <h2>مرحبًا بك في وحدة تطوير الويب 💻</h2>
+      <p>ستتعلم هنا ستة دروس أساسية: HTML، CSS، وJavaScript. استخدم زر "قائمة الدروس" لفتح القائمة واختيار الدرس الذي تريد استكشافه. استمتع بالتعلم التفاعلي!</p>
+      <button class="menu-btn" onclick="toggleSidebar()">قائمة الدروس 📚</button>
+    </div>
+
+    <div class="lesson" id="lesson1">
+      <h2>درس 1: أساسيات HTML 📝</h2>
+      <p>HTML هي لغة ترميز تُستخدم لبناء هيكل صفحات الويب.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML" alt="درس HTML">
+      <div>
+        <button onclick="nextLesson()">التالي</button>
       </div>
     </div>
-    <!-- LESSON VIEW -->
-    <div id="lesson-view">
-      <div class="lesson-hero">
-        <div class="lesson-breadcrumb" id="lesson-breadcrumb"></div>
-        <div class="lesson-title" id="lesson-title"></div>
-        <div class="lesson-meta" id="lesson-meta"></div>
-      </div>
-      <div class="lesson-body">
-        <div class="lesson-left" id="lesson-left"></div>
-        <div class="lesson-right">
-          <div class="editor-panel">
-            <div class="editor-tabs" id="editor-tabs"></div>
-            <div class="editor-actions">
-              <button class="btn-run" id="btn-run">▶ Run</button>
-              <button class="btn-check" id="btn-check">✓ Check</button>
-              <button class="btn-reset" id="btn-reset">↺ Reset</button>
-            </div>
-            <div class="cm-wrap" id="cm-wrap"></div>
-            <div class="feedback-strip idle" id="feedback">
-              💡 Write your code and click Check to validate.
-            </div>
-          </div>
-          <div class="preview-label"><div class="live-dot"></div> Preview</div>
-          <div class="preview-panel"><iframe id="preview-frame" sandbox="allow-scripts"></iframe></div>
-        </div>
+
+    <div class="lesson" id="lesson2">
+      <h2>درس 2: العناصر والعلامات الأساسية 📝</h2>
+      <p>تتكون صفحات HTML من عناصر تحتوي على علامات (<code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>) لتحديد العناوين، الفقرات، والصور.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML+Elements" alt="درس HTML">
+      <div>
+        <button onclick="prevLesson()">السابق</button>
+        <button onclick="nextLesson()">التالي</button>
       </div>
     </div>
-    <!-- QUIZ VIEW -->
-    <div id="quiz-view">
-      <div class="quiz-header">
-        <h2 id="quiz-title"></h2>
-        <p id="quiz-subtitle"></p>
-      </div>
-      <div id="quiz-questions"></div>
-      <button class="btn-submit-quiz" id="btn-submit-quiz">Submit Answers</button>
-      <div class="quiz-result" id="quiz-result">
-        <div class="qr-score" id="qr-score"></div>
-        <div class="qr-msg" id="qr-msg"></div>
-        <button class="btn-next-lesson" id="btn-after-quiz">Continue →</button>
+
+    <div class="lesson" id="lesson3">
+      <h2>درس 3: تصميم الصفحات باستخدام CSS 🎨</h2>
+      <p>CSS تُستخدم لتصميم صفحات الويب وتحديد الألوان والخطوط والتخطيطات.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">السابق</button>
+        <button onclick="nextLesson()">التالي</button>
       </div>
     </div>
-    <!-- CERT VIEW -->
-    <div id="cert-view">
-      <div class="cert-card" id="cert-card">
-        <div class="cert-seal"> عبدالله صلاح<br>Instructor </div>
-        <div class="cert-badge">🏆</div>
-        <div class="cert-title">Certificate of Completion</div>
-        <div class="cert-main" id="cert-course-name"></div>
-        <p style="color:var(--text2);margin-bottom:4px;">Awarded to</p>
-        <div class="cert-student" id="cert-student"></div>
-        <div class="cert-course" id="cert-course-desc"></div>
-        <div class="cert-grade" id="cert-grade"></div>
-        <div class="cert-date" id="cert-date"></div>
-        <div style="font-size:0.9rem;">عبدالله صلاح</div>
+
+    <div class="lesson" id="lesson4">
+      <h2>درس 4: التنسيقات النصية والألوان 🎨</h2>
+      <p>يمكن تغيير الخطوط، حجم النصوص، المحاذاة، والألوان باستخدام خصائص CSS مثل <code>font-family</code>, <code>color</code>, و<code>text-align</code>.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS+Typography" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">السابق</button>
+        <button onclick="nextLesson()">التالي</button>
       </div>
-      <button class="btn-dl-cert" id="btn-dl-cert">⬇ Download Certificate</button>
+    </div>
+
+    <div class="lesson" id="lesson5">
+      <h2>درس 5: أساسيات JavaScript ⚡</h2>
+      <p>JavaScript لغة برمجة تُستخدم لإضافة التفاعلية للصفحات مثل الأزرار والنماذج.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">السابق</button>
+        <button onclick="nextLesson()">التالي</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson6">
+      <h2>درس 6: المتغيرات والشروط ⚡</h2>
+      <p>المتغيرات تُستخدم لتخزين البيانات، والشروط (<code>if</code>) للتحكم في سير البرنامج بناءً على القيم.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript+Variables" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">السابق</button>
+        <button onclick="startTest()">اختبار المحتوى</button>
+      </div>
     </div>
   </div>
-</div>
-
-<div id="toast"></div>
-
 </body>
-<script src="index.js"></script>
-</html>
+<script src="app.js"></script>
+                                                                                                                                                           </html>
