@@ -1,113 +1,135 @@
+const lessonOrder = ['lesson1','lesson2','lesson3' , 'lesson4','lesson5','lesson6'];
 
-const CURRICULUM = {
-  html: {
-    id: 'html', title: 'HTML Fundamentals', icon: '🌐',
-    desc: 'Learn to structure web pages with semantic HTML5.',
-    color: 'cc-bar-html',
-    modules: [
-      {
-        id: 'html-m1', title: 'Introduction to HTML',
-        lessons: [
-          {
-            id: 'html-l1', title: 'What is HTML?', type: 'Lesson', diff: 'Beginner', xp: 20,
-            mode: 'htmlmixed', editorTabs: ['HTML'],
-            explanation: `<p><strong>HTML</strong> (HyperText Markup Language) is the backbone of every web page. It provides the <strong>structure and meaning</strong> to your content using elements called <em>tags</em>.</p><p>Think of HTML as the skeleton of a building — CSS is the paint and decoration, JavaScript is the electricity and plumbing.</p><p>HTML documents begin with a <code>&lt;!DOCTYPE html&gt;</code> declaration followed by an <code>&lt;html&gt;</code> root element.</p>`,
-            example: `<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <title>My Page</title>\n  </head>\n  <body>\n    <h1>Hello, World!</h1>\n    <p>This is my first paragraph.</p>\n  </body>\n</html>`,
-            task: 'Create a valid HTML page with a <code>&lt;!DOCTYPE html&gt;</code>, an <code>&lt;html&gt;</code> root, a <code>&lt;head&gt;</code> with a <code>&lt;title&gt;</code>, and a <code>&lt;body&gt;</code> containing an <code>&lt;h1&gt;</code> heading.',
-            starterCode: `<!-- Write your HTML page here -->\n`,
-            validate: (code) => {
-              const c = code.toLowerCase();
-              const checks = [
-                c.includes('<!doctype html>'),
-                c.includes('<html'),
-                c.includes('<head>'),
-                c.includes('<title>') && c.includes('</title>'),
-                c.includes('<body>'),
-                c.includes('<h1>') && c.includes('</h1>'),
-              ];
-              const passed = checks.filter(Boolean).length;
-              if (passed === 6) return { status: 'correct', msg: '✅ Perfect! Your first valid HTML page is complete!' };
-              if (passed >= 4) return { status: 'partial', msg: `⚠️ Good progress! Missing: ${[
-                '!DOCTYPE html', '<html>', '<head>', '<title>', '<body>', '<h1>'
-              ].filter((_,i)=>!checks[i]).join(', ')}` };
-              return { status: 'error', msg: '❌ Keep going! Make sure to include all required HTML elements.' };
-            }
-          },
-          {
-            id: 'html-l2', title: 'Headings & Paragraphs', type: 'Lesson', diff: 'Beginner', xp: 20,
-            mode: 'htmlmixed', editorTabs: ['HTML'],
-            explanation: `<p>HTML provides <strong>six heading levels</strong> (<code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>), with <code>&lt;h1&gt;</code> being the most important. Paragraphs are wrapped in <code>&lt;p&gt;</code> tags.</p><p>Headings create <strong>document hierarchy</strong> — search engines and screen readers rely on this structure. Always use one <code>&lt;h1&gt;</code> per page as your main title.</p>`,
-            example: `<h1>Main Title</h1>\n<h2>Section Heading</h2>\n<h3>Subsection</h3>\n<p>This is a paragraph. Text can be <strong>bold</strong> or <em>italic</em>.</p>\n<p>A second paragraph with more content.</p>`,
-            task: 'Write HTML that includes an <code>&lt;h1&gt;</code>, at least one <code>&lt;h2&gt;</code>, and two <code>&lt;p&gt;</code> tags.',
-            starterCode: `<!-- Add your headings and paragraphs -->\n`,
-            validate: (code) => {
-              const c = code.toLowerCase();
-              const h1 = c.includes('<h1>') && c.includes('</h1>');
-              const h2 = c.includes('<h2>') && c.includes('</h2>');
-              const pCount = (c.match(/<p>/g) || []).length;
-              if (h1 && h2 && pCount >= 2) return { status: 'correct', msg: '✅ Excellent! Headings and paragraphs mastered!' };
-              if (h1 || h2 || pCount >= 1) return { status: 'partial', msg: '⚠️ Need: ' + [!h1&&'<h1>',!h2&&'<h2>',pCount<2&&'2x <p>'].filter(Boolean).join(', ') };
-              return { status: 'error', msg: '❌ Add an h1, h2, and two paragraph tags.' };
-            }
-          },
-          {
-            id: 'html-l3', title: 'Module Quiz', type: 'Quiz', diff: 'Beginner', xp: 30,
-            quiz: [
-              { q: 'What does HTML stand for?', options: ['HyperText Markup Language','HyperText Making Language','High-Transfer Markup Language','HyperText Modern Layout'], correct: 0 },
-              { q: 'Which tag creates the largest heading?', options: ['h6','heading','h1','big'], correct: 2 },
-              { q: 'Which element wraps the visible content of a page?', options: ['head','main','html','body'], correct: 3 },
-              { q: 'What does DOCTYPE declaration do?', options: ['Creates a document','Tells the browser the HTML version','Links CSS files','Adds meta data'], correct: 1 },
-            ]
-          }
-        ]
-      },
-      {
-        id: 'html-m2', title: 'Links, Images & Lists',
-        lessons: [
-          {
-            id: 'html-l4', title: 'Hyperlinks', type: 'Lesson', diff: 'Beginner', xp: 25,
-            mode: 'htmlmixed', editorTabs: ['HTML'],
-            explanation: `<p>Links are created with the <code>&lt;a&gt;</code> (anchor) element. The <code>href</code> attribute specifies the destination URL.</p><p>Use <code>target="_blank"</code> to open in a new tab. The <code>rel="noopener noreferrer"</code> attribute is a security best practice when doing so.</p>`,
-            example: `<a href="https://example.com">Visit Example</a>\n<a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>\n<a href="#section">Jump to section</a>`,
-            task: 'Create two anchor tags: one linking to any external URL, and one that opens in a new tab using <code>target="_blank"</code>.',
-            starterCode: `<!-- Write your anchor tags here -->\n`,
-            validate: (code) => {
-              const c = code.toLowerCase();
-              const hasAnchor = (c.match(/<a /g) || []).length >= 2;
-              const hasHref = (c.match(/href=/g) || []).length >= 2;
-              const hasNewTab = c.includes('target="_blank"') || c.includes("target='_blank'");
-              if (hasAnchor && hasHref && hasNewTab) return { status: 'correct', msg: '✅ Perfect links! Both anchors are correct.' };
-              if (hasAnchor || hasHref) return { status: 'partial', msg: '⚠️ Close! Remember: 2 anchor tags, both with href, one with target="_blank"' };
-              return { status: 'error', msg: '❌ Create <a href="..."> tags. One needs target="_blank".' };
-            }
-          },
-          {
-            id: 'html-l5', title: 'Images', type: 'Lesson', diff: 'Beginner', xp: 25,
-            mode: 'htmlmixed', editorTabs: ['HTML'],
-            explanation: `<p>Images are embedded with the <strong>self-closing</strong> <code>&lt;img&gt;</code> tag. Required attributes are <code>src</code> (source URL) and <code>alt</code> (alternative text for accessibility).</p><p>The <code>alt</code> attribute is not optional — it helps screen readers and displays when the image fails to load.</p>`,
-            example: `<img src="https://placekitten.com/300/200" alt="A cute kitten" width="300" height="200">\n<img src="logo.png" alt="Company logo">`,
-            task: 'Add an image with a valid <code>src</code>, a descriptive <code>alt</code> attribute, and <code>width</code> and <code>height</code> attributes.',
-            starterCode: `<!-- Add your img tag here -->\n`,
-            validate: (code) => {
-              const c = code.toLowerCase();
-              const hasImg = c.includes('<img');
-              const hasSrc = c.includes('src=');
-              const hasAlt = c.includes('alt=');
-              const hasDims = c.includes('width=') && c.includes('height=');
-              if (hasImg && hasSrc && hasAlt && hasDims) return { status: 'correct', msg: '✅ Great image tag! All attributes present.' };
-              if (hasImg && hasSrc && hasAlt) return { status: 'partial', msg: '⚠️ Good! Add width and height attributes too.' };
-              if (hasImg && hasSrc) return { status: 'partial', msg: '⚠️ Remember the alt attribute for accessibility!' };
-              return { status: 'error', msg: '❌ Add an <img> tag with src and alt attributes.' };
-            }
-          },
-          {
-            id: 'html-l6', title: 'Lists', type: 'Lesson', diff: 'Beginner', xp: 25,
-            mode: 'htmlmixed', editorTabs: ['HTML'],
-            explanation: `<p>HTML has two main list types: <strong>Unordered lists</strong> (<code>&lt;ul&gt;</code>) use bullet points, while <strong>Ordered lists</strong> (<code>&lt;ol&gt;</code>) are numbered. Both use <code>&lt;li&gt;</code> for each item. Lists can also be <strong>nested</strong>.</p>`,
-            example: `<ul>\n  <li>Apples</li>\n  <li>Bananas</li>\n  <li>Cherries</li>\n</ul>\n<ol>\n  <li>First step</li>\n  <li>Second step</li>\n  <li>Third step</li>\n</ol>`,
-            task: 'Create one <code>&lt;ul&gt;</code> with 3 items AND one <code>&lt;ol&gt;</code> with 3 items.',
-            starterCode: `<!-- Create your lists here -->\n`,
-            validate: (code) => {
+let unlockedLessons = ['lesson1'];
+let currentLesson = 0;
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('show');
+  document.getElementById('mainContent').classList.toggle('shift');
+}
+
+function toggleSection(el) {
+  const list = el.nextElementSibling;
+  const arrow = el.querySelector('.arrow');
+  if (list && list.style.display === 'flex') { list.style.display = 'none'; arrow.classList.remove('down'); }
+  else if (list) { list.style.display = 'flex'; arrow.classList.add('down'); }
+}
+
+function canOpenLesson(id) { return unlockedLessons.includes(id); }
+
+function showLesson(id) {
+  if (!canOpenLesson(id)) { alert('يجب إنهاء الدرس السابق أولاً.'); return; }
+  document.getElementById('intro').style.display = 'none';
+  document.querySelectorAll('.lesson').forEach(l => l.style.display = l.id===id?'block':'none');
+  currentLesson = lessonOrder.indexOf(id);
+  toggleSidebar();
+}
+
+function nextLesson() {
+  if (currentLesson < lessonOrder.length-1) {
+    if(!unlockedLessons.includes(lessonOrder[currentLesson+1])) unlockedLessons.push(lessonOrder[currentLesson+1]);
+    showLesson(lessonOrder[currentLesson+1]);
+  }
+}
+
+function prevLesson() {
+  if (currentLesson > 0) showLesson(lessonOrder[currentLesson-1]);
+}
+
+function startTest() {
+  if (unlockedLessons.length < lessonOrder.length) {
+    alert('يجب إنهاء جميع الدروس أولاً للتمكن من الاختبار.');
+    return;
+  }
+  const username = prompt("من فضلك أدخل اسمك لبدء الاختبار:");
+  if (!username) return;
+
+  toggleSidebar();
+  document.getElementById('intro').style.display='none';
+  document.querySelectorAll('.lesson').forEach(l=>l.style.display='none');
+
+  const questions = [
+    {q:"ما العنصر الأساسي للحياة؟", options:["الماء","النباتات","الحيوانات"], answer:0},
+    {q:"ما الذي تنتجه النباتات؟", options:["الأكسجين","الفحم","المعادن"], answer:0},
+    {q:"ما دور الحيوانات في البيئة؟", options:["لا دور لها","تلعب دورًا مهمًا","تسبب مشاكل"], answer:1},
+    {q:"أين يوجد الماء؟", options:["في الأرض فقط","في البحر فقط","في جميع الكائنات"], answer:2},
+    {q:"أي من التالي غذاء للنباتات؟", options:["الأكسجين","الضوء","الفضاء"], answer:1},
+    {q:"الحيوانات تتكاثر عن طريق؟", options:["البيض","التكاثر الجنسي","الاثنان"], answer:2},
+    {q:"الماء مهم لـ؟", options:["الشرب","الطعام","النوم"], answer:0},
+    {q:"النباتات توفر؟", options:["المعادن","الأكسجين","الوقود"], answer:1},
+    {q:"الحيوانات تعيش في؟", options:["الماء","البر والبحر","البر فقط"], answer:1},
+    {q:"الماء يساهم في؟", options:["تنظيم الحرارة","الإضاءة","الصوت"], answer:0}
+  ];
+
+  let html = '<div class="intro"><h2>اختبار الوحدة 🌱</h2>';
+  questions.forEach((qs,i)=>{
+    html += `<p>${i+1}. ${qs.q}</p>`;
+    qs.options.forEach((opt,j)=>{
+      html += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+    });
+  });
+  html += `<button onclick='checkTest("${username}", ${JSON.stringify(questions)})'>تقييم الاختبار</button></div>`;
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function checkTest(username, questions){
+  let score = 0;
+  questions.forEach((qs,i)=>{
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel && parseInt(sel.value)===qs.answer) score++;
+  });
+  const percent = Math.round((score/questions.length)*100);
+  const grade = percent>=90?"A":percent>=80?"B":percent>=70?"C":"F";
+
+  let html = `<div class="intro"><h2>نتيجة الاختبار 🌟</h2>`;
+  html += `<p>اسم الطالب: <strong>${username}</strong></p>`;
+  html += `<p>الدرجة: ${percent}% (${score}/${questions.length})</p>`;
+  html += `<p>التاريخ: ${new Date().toLocaleDateString('ar-EG')}</p>`;
+  if(percent>=70){
+    html += `<p>مبروك! لقد اجتزت الاختبار بنجاح.</p>`;
+    html += `<button onclick='downloadCert({title:"وحدة العلوم"}, ${percent}, "${grade}", "${username}")'>تحميل الشهادة</button>`;
+  } else {
+    html += `<p>للأسف، لم تحقق الحد الأدنى 70%. حاول مرة أخرى.</p>`;
+  }
+  html += `</div>`;
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function downloadCert(course, score, grade, studentName) {
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate</title><style>
+body{font-family:'Georgia',serif;background:#f5f5f5;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+.cert{border:5px solid #ffd60a;border-radius:20px;padding:60px 100px;max-width:750px;text-align:center;position:relative;background:linear-gradient(145deg,#ffffff,#fff8dc);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.cert::before{content:'';position:absolute;top:10px;left:10px;right:10px;bottom:10px;border:2px solid #ffd60a;border-radius:16px;pointer-events:none}
+h1{color:#ff6b35;font-size:2.5rem;margin-bottom:12px}
+.badge{font-size:5rem;margin:20px 0}
+.student{font-size:2.2rem;color:#7c3aed;font-weight:700;margin:16px 0}
+.grade{color:#06d6a0;font-size:1.5rem;font-weight:700;margin-top:14px}
+.date{color:#555;font-size:0.95rem;margin-top:12px}
+.signature{margin-top:40px}
+.cert-seal { width: 90px; height: 90px; border-radius: 50%; position: absolute; top: 10px; right: 20px; background: radial-gradient(circle at 30% 30%, #ffd700, #cfa000 80%); border: 2px solid #b8860b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: #fff; text-align: center; transform: rotate(-10deg); text-shadow: 0 1px 2px rgba(0,0,0,0.4); z-index: 10; }
+.signature .line{width:180px;margin:0 auto 6px;border-top:1.5px solid #000}
+.signature .name{font-size:1rem;color:#000;font-weight:600}
+.signature .role{font-size:0.8rem;color:#555}
+.seal{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.85rem;text-align:center;line-height:1.2;position:absolute;top:20px;right:40px;background:radial-gradient(circle at 30% 30%,#ffd700,#cfa000 80%);box-shadow:0 6px 15px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.4);border:3px solid #b8860b;transform:rotate(-10deg);text-shadow:0 1px 2px rgba(0,0,0,0.4)}
+</style></head><body>
+<div class="cert">
+  <div class="seal">عبدالله صلاح<br>Instructor</div>
+  <div class="badge">🏆</div>
+  <p style="font-size:.85rem;text-transform:uppercase;letter-spacing:.25em;color:#888">Certificate of Completion</p>
+  <h1>${course.title}</h1>
+  <p style="color:#666;margin-bottom:10px">Awarded to</p>
+  <div class="student">${studentName}</div>
+  <p style="color:#666;margin-bottom:10px">has successfully completed this course</p>
+  <div class="grade">Grade: ${grade} · ${score}%</div>
+  <div class="date">Issued: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <div class="date">BodaAcademy · Frontend Mastery Program</div>
+  <div class="signature"><div class="line"></div><div class="name">عبدالله صلاح</div><div class="role">Instructor / Supervisor</div></div>
+</div>
+</body></html>`;
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+}            validate: (code) => {
               const c = code.toLowerCase();
               const ulItems = (c.match(/<ul[\s>]/g)||[]).length >= 1;
               const olItems = (c.match(/<ol[\s>]/g)||[]).length >= 1;
