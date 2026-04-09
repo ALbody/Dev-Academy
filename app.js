@@ -1,100 +1,197 @@
-const lessonOrder = ['lesson1','lesson2','lesson3' , 'lesson4','lesson5','lesson6'];
+const lessonOrder = [
+  'lesson1','lesson2','lesson3','lesson4','lesson5',
+  'lesson6','lesson7','lesson8','lesson9','lesson10',
+  'lesson11','lesson12','lesson13','lesson14','lesson15',
+  'lesson16','lesson17','lesson18','lesson19'
+];
 
 let unlockedLessons = ['lesson1'];
 let currentLesson = 0;
 
+// ===============================
+// Sidebar Controls
+// ===============================
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('show');
   document.getElementById('mainContent').classList.toggle('shift');
 }
 
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('show');
+  document.getElementById('mainContent').classList.remove('shift');
+}
+
+// ===============================
+// Sections Toggle
+// ===============================
 function toggleSection(el) {
   const list = el.nextElementSibling;
   const arrow = el.querySelector('.arrow');
-  if (list && list.style.display === 'flex') { list.style.display = 'none'; arrow.classList.remove('down'); }
-  else if (list) { list.style.display = 'flex'; arrow.classList.add('down'); }
-}
 
-function canOpenLesson(id) { return unlockedLessons.includes(id); }
+  if (!list) return;
 
-function showLesson(id) {
-  if (!canOpenLesson(id)) { alert('يجب إنهاء الدرس السابق أولاً.'); return; }
-  document.getElementById('intro').style.display = 'none';
-  document.querySelectorAll('.lesson').forEach(l => l.style.display = l.id===id?'block':'none');
-  currentLesson = lessonOrder.indexOf(id);
-  toggleSidebar();
-}
-
-function nextLesson() {
-  if (currentLesson < lessonOrder.length-1) {
-    if(!unlockedLessons.includes(lessonOrder[currentLesson+1])) unlockedLessons.push(lessonOrder[currentLesson+1]);
-    showLesson(lessonOrder[currentLesson+1]);
+  if (list.style.display === 'flex') {
+    list.style.display = 'none';
+    arrow.classList.remove('down');
+  } else {
+    list.style.display = 'flex';
+    arrow.classList.add('down');
   }
 }
 
-function prevLesson() {
-  if (currentLesson > 0) showLesson(lessonOrder[currentLesson-1]);
+// ===============================
+// Lesson Navigation
+// ===============================
+function canOpenLesson(id) {
+  return unlockedLessons.includes(id);
 }
- // exam
-function startTest() {
-  if (unlockedLessons.length < lessonOrder.length) {
-    alert('يجب إنهاء جميع الدروس أولاً للتمكن من الاختبار.');
+
+// STRICT SEQUENTIAL CONTROL
+function showLesson(id) {
+  const index = lessonOrder.indexOf(id);
+  if (index === -1) return;
+
+  if (!canOpenLesson(id)) {
+    alert('هذا الدرس مقفل. اتبع الترتيب.');
     return;
   }
-  const username = prompt("من فضلك أدخل اسمك لبدء الاختبار:");
+
+  if (index > currentLesson + 1) {
+    alert('لا يمكن تخطي الدروس.');
+    return;
+  }
+
+  document.getElementById('intro').style.display = 'none';
+
+  document.querySelectorAll('.lesson').forEach(lesson => {
+    lesson.style.display = (lesson.id === id) ? 'block' : 'none';
+  });
+
+  currentLesson = index;
+  closeSidebar();
+}
+
+// الانتقال إلى أول درس
+function move() {
+  showLesson('lesson1');
+}
+
+// ===============================
+// Next Lesson
+// ===============================
+function nextLesson() {
+  if (currentLesson >= lessonOrder.length - 1) return;
+
+  const next = lessonOrder[currentLesson + 1];
+
+  if (!unlockedLessons.includes(next)) {
+    unlockedLessons.push(next);
+  }
+
+  currentLesson++;
+  showLesson(lessonOrder[currentLesson]);
+}
+
+// ===============================
+// Previous Lesson
+// ===============================
+function prevLesson() {
+  if (currentLesson <= 0) return;
+
+  currentLesson--;
+  showLesson(lessonOrder[currentLesson]);
+}
+
+// ===============================
+// Start Test
+// ===============================
+function startTest() {
+  if (unlockedLessons.length < lessonOrder.length) {
+    alert('أكمل كل الدروس أولاً');
+    return;
+  }
+
+  const username = prompt("ادخل اسمك:");
   if (!username) return;
 
-  toggleSidebar();
-  document.getElementById('intro').style.display='none';
-  document.querySelectorAll('.lesson').forEach(l=>l.style.display='none');
+  closeSidebar();
+
+  document.getElementById('intro').style.display = 'none';
+  document.querySelectorAll('.lesson').forEach(l => l.style.display = 'none');
 
   const questions = [
-    {q:"ما الوظيفة الأساسية للغة HTML?", options:["تصميم الصفحة","بناء الهيكل","إدارة البيانات","تشغيل الخادم"], answer:1},
-    {q:"أي وسم يُستخدم لكتابة عنوان رئيسي؟", options:["p","div","h1","span"], answer:2},
-    {q:"أي وسم يُستخدم لإضافة صورة في HTML?", options:["img","src","image","pic>"], answer:0},
-    {q:"ما وظيفة CSS?", options:["تصميم الصفحة","بناء الهيكل","إدارة البيانات","تشغيل الخادم"], answer:1},
-    {q:"أي خاصية تغير لون النص؟", options:["font-size","color","background","border"], answer:1},
-    {q:"أي من التالي يستخدم لربط CSS?", options:["script","style","link","meta"], answer:2},
-    {q:"ما لغة البرمجة المستخدمة للتفاعل؟", options:["HTML","CSS","JavaScript","SQL"], answer:2},
-    {q:"أي كلمة تستخدم لتعريف متغير؟", options:["int","var","define","value"], answer:1},
-    {q:"ما وظيفة if في JavaScript?", options:["تكرار الكود","تنفيذ شرط","تعريف دالة","عرض نص"], answer:1},
-    {q:"ما هو DOM?", options:["لغة برمجة","نظام تشغيل","تمثيل صفحة HTML","محرر نصوص"], answer:2}
+    { q: "ما وظيفة HTML?", options: ["تصميم", "هيكل", "بيانات", "سيرفر"], answer: 1 },
+    { q: "وسم العنوان؟", options: ["p","div","h1","span"], answer: 2 },
+    { q: "إضافة صورة؟", options: ["img","src","image","pic"], answer: 0 },
+    { q: "CSS وظيفته؟", options: ["تصميم","هيكل","بيانات","سيرفر"], answer: 0 },
+    { q: "لون النص؟", options: ["font","color","bg","border"], answer: 1 },
+    { q: "ربط CSS؟", options: ["script","style","link","meta"], answer: 2 },
+    { q: "JS للتفاعل؟", options: ["HTML","CSS","JS","SQL"], answer: 2 },
+    { q: "var تعني؟", options: ["متغير","ثابت","دالة","نص"], answer: 0 },
+    { q: "if معناها؟", options: ["loop","شرط","function","print"], answer: 1 },
+    { q: "DOM؟", options: ["لغة","نظام","صفحة","ملف"], answer: 2 }
   ];
 
-  let html = '<div class="intro"><h2>اختبار الوحدة 🌱</h2>';
-  questions.forEach((qs,i)=>{
-    html += `<p>${i+1}. ${qs.q}</p>`;
-    qs.options.forEach((opt,j)=>{
-      html += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+  let html = `<div class="intro"><h2>Exam</h2>`;
+
+  questions.forEach((q, i) => {
+    html += `<p>${i + 1}. ${q.q}</p>`;
+    q.options.forEach((o, j) => {
+      html += `
+        <label>
+          <input type="radio" name="q${i}" value="${j}"> ${o}
+        </label><br>`;
     });
   });
-  html += `<button onclick='checkTest("${username}", ${JSON.stringify(questions)})'>تقييم الاختبار</button></div>`;
-  document.getElementById('mainContent').innerHTML = html;
-}
- // test exam
-function checkTest(username, questions){
-  let score = 0;
-  questions.forEach((qs,i)=>{
-    const sel = document.querySelector(`input[name="q${i}"]:checked`);
-    if(sel && parseInt(sel.value)===qs.answer) score++;
-  });
-  const percent = Math.round((score/questions.length)*100);
-  const grade = percent>=90?"A":percent>=80?"B":percent>=70?"C":"F";
 
-  let html = `<div class="intro"><h2>نتيجة الاختبار 🌟</h2>`;
-  html += `<p>اسم الطالب: <strong>${username}</strong></p>`;
-  html += `<p>الدرجة: ${percent}% (${score}/${questions.length})</p>`;
-  html += `<p>التاريخ: ${new Date().toLocaleDateString('ar-EG')}</p>`;
-  if(percent>=70){
-    html += `<p>مبروك! لقد اجتزت الاختبار بنجاح.</p>`;
-    html += `<button onclick='downloadCert({title:"وحدة العلوم"}, ${percent}, "${grade}", "${username}")'>تحميل الشهادة</button>`;
-  } else {
-    html += `<p>للأسف، لم تحقق الحد الأدنى 70%. حاول مرة أخرى.</p>`;
-  }
-  html += `</div>`;
+  html += `
+    <button onclick='checkTest("${username}", ${JSON.stringify(questions)})'>
+      تقييم
+    </button>
+  </div>`;
+
   document.getElementById('mainContent').innerHTML = html;
 }
- // الشهادة
+
+// ===============================
+// Check Test
+// ===============================
+function checkTest(username, questions) {
+  let score = 0;
+
+  questions.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if (sel && +sel.value === q.answer) score++;
+  });
+
+  const percent = Math.round((score / questions.length) * 100);
+  const grade = percent >= 90 ? "A" :
+                percent >= 80 ? "B" :
+                percent >= 70 ? "C" : "F";
+
+  let html = `<div class="intro">
+    <h2>Result</h2>
+    <p>Student: ${username}</p>
+    <p>Score: ${percent}%</p>
+    <p>${score}/${questions.length}</p>`;
+
+  if (percent >= 70) {
+    html += `
+      <button onclick='downloadCert({title:"Frontend Development"}, ${percent}, "${grade}", "${username}")'>
+        Certificate
+      </button>`;
+  } else {
+    html += `<p>Fail</p>`;
+  }
+
+  html += `</div>`;
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ===============================
+// Download Certificate
+// ===============================
 function downloadCert(course, score, grade, studentName) {
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate</title><style>
 body{font-family:'Georgia',serif;background:#f5f5f5;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
@@ -126,6 +223,7 @@ h1{color:#ff6b35;font-size:2.5rem;margin-bottom:12px}
   <div class="signature"><div class="line"></div><div class="name">عبدالله صلاح</div><div class="role">Instructor / Supervisor</div></div>
 </div>
 </body></html>`;
+
   const win = window.open('', '_blank');
   win.document.write(html);
   win.document.close();
