@@ -15,35 +15,49 @@
   </header>
 
   <div class="sidebar" id="sidebar">
-    <h2>الوحدة التعليمية</h2>
-    <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن درس...">
-
+    <h2>Frontend Assessment</h2>
     <div class="section">
       <div class="section-title" onclick="toggleSection(this)">HTML 📝 <span class="arrow">&#9654;</span></div>
       <div class="lesson-list">
-        <div onclick="showLesson('lesson1')">درس 1: أساسيات HTML</div>
-        <div onclick="showLesson('lesson2')">درس 2: العناصر والعلامات الأساسية</div>
+        <div onclick="showLesson('lesson1')">What is HTML?</div>
+        <div onclick="showLesson('lesson2')">Headings & Paragraphs</div>
+        <div onclick="showLesson('lesson3')">Hyperlinks</div>
+        <div onclick="showLesson('lesson4')">Images</div>
+        <div onclick="showLesson('lesson5')">Lists</div>
+        <div onclick="showLesson('lesson6')">Video</div>
+        <div onclick="showLesson('lesson7')">HTML Forms</div>
+        <div onclick="showLesson('lesson8')">HTML Tables</div>
+        <div onclick="showLesson('lesson8')">Module Quiz</div>
+
+
+
       </div>
     </div>
 
     <div class="section">
       <div class="section-title" onclick="toggleSection(this)">CSS 🎨 <span class="arrow">&#9654;</span></div>
       <div class="lesson-list">
-        <div onclick="showLesson('lesson3')">درس 3: تصميم الصفحات باستخدام CSS</div>
-        <div onclick="showLesson('lesson4')">درس 4: التنسيقات النصية والألوان</div>
+        <div onclick="showLesson('lesson10')">CSS Styling</div>
+        <div onclick="showLesson('lesson11')">The Box Model</div>
+        <div onclick="showLesson('lesson12')">Layout with Flexbox & Grid</div>
+        <div onclick="showLesson('lesson13')">CSS Grid Layout</div>
+        <div onclick="showLesson('lesson14')">Module Quiz</div>
       </div>
     </div>
 
     <div class="section">
       <div class="section-title" onclick="toggleSection(this)">JavaScript ⚡ <span class="arrow">&#9654;</span></div>
       <div class="lesson-list">
-        <div onclick="showLesson('lesson5')">درس 5: أساسيات JavaScript</div>
-        <div onclick="showLesson('lesson6')">درس 6: المتغيرات والشروط</div>
+        <div onclick="showLesson('lesson15')">JavaScript Essentials</div>
+        <div onclick="showLesson('lesson16')">Functions</div>
+        <div onclick="showLesson('lesson17')">DOM Manipulation</div>
+        <div onclick="showLesson('lesson18')">Event Listeners</div>
+        <div onclick="showLesson('lesson19')">Module Quiz</div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-title" onclick="startTest()">اختبار الوحدة 📝</div>
+      <div class="section-title" onclick="startTest()">Final Frontend Assessment</div>
     </div>
   </div>
 
@@ -51,15 +65,15 @@
     <div class="intro" id="intro">
       <h2>مرحبًا بك في وحدة تطوير الويب 💻</h2>
       <p>ستتعلم هنا ستة دروس أساسية: HTML، CSS، وJavaScript. استخدم زر "قائمة الدروس" لفتح القائمة واختيار الدرس الذي تريد استكشافه. استمتع بالتعلم التفاعلي!</p>
-      <button class="menu-btn" onclick="toggleSidebar()">قائمة الدروس 📚</button>
+      <button class="menu-btn" onclick="move()">الانتقال الي المحتوى</button>
     </div>
-
+    
     <div class="lesson" id="lesson1">
       <h2>درس 1: أساسيات HTML 📝</h2>
       <p>HTML هي لغة ترميز تُستخدم لبناء هيكل صفحات الويب.</p>
       <img src="https://via.placeholder.com/400x200?text=HTML" alt="درس HTML">
       <div>
-        <button onclick="nextLesson()">التالي</button>
+        <button onclick="nextLesson()">next</button>
       </div>
     </div>
 
@@ -68,8 +82,8 @@
       <p>تتكون صفحات HTML من عناصر تحتوي على علامات (<code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>) لتحديد العناوين، الفقرات، والصور.</p>
       <img src="https://via.placeholder.com/400x200?text=HTML+Elements" alt="درس HTML">
       <div>
-        <button onclick="prevLesson()">السابق</button>
-        <button onclick="nextLesson()">التالي</button>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
       </div>
     </div>
 
@@ -78,8 +92,8 @@
       <p>CSS تُستخدم لتصميم صفحات الويب وتحديد الألوان والخطوط والتخطيطات.</p>
       <img src="https://via.placeholder.com/400x200?text=CSS" alt="درس CSS">
       <div>
-        <button onclick="prevLesson()">السابق</button>
-        <button onclick="nextLesson()">التالي</button>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
       </div>
     </div>
 
@@ -88,8 +102,8 @@
       <p>يمكن تغيير الخطوط، حجم النصوص، المحاذاة، والألوان باستخدام خصائص CSS مثل <code>font-family</code>, <code>color</code>, و<code>text-align</code>.</p>
       <img src="https://via.placeholder.com/400x200?text=CSS+Typography" alt="درس CSS">
       <div>
-        <button onclick="prevLesson()">السابق</button>
-        <button onclick="nextLesson()">التالي</button>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
       </div>
     </div>
 
@@ -98,8 +112,8 @@
       <p>JavaScript لغة برمجة تُستخدم لإضافة التفاعلية للصفحات مثل الأزرار والنماذج.</p>
       <img src="https://via.placeholder.com/400x200?text=JavaScript" alt="درس JavaScript">
       <div>
-        <button onclick="prevLesson()">السابق</button>
-        <button onclick="nextLesson()">التالي</button>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
       </div>
     </div>
 
@@ -108,11 +122,138 @@
       <p>المتغيرات تُستخدم لتخزين البيانات، والشروط (<code>if</code>) للتحكم في سير البرنامج بناءً على القيم.</p>
       <img src="https://via.placeholder.com/400x200?text=JavaScript+Variables" alt="درس JavaScript">
       <div>
-        <button onclick="prevLesson()">السابق</button>
-        <button onclick="startTest()">اختبار المحتوى</button>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+    <div class="lesson" id="lesson7">
+      <h2>درس 1: أساسيات HTML 📝</h2>
+      <p>HTML هي لغة ترميز تُستخدم لبناء هيكل صفحات الويب.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML" alt="درس HTML">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson8">
+      <h2>درس 2: العناصر والعلامات الأساسية 📝</h2>
+      <p>تتكون صفحات HTML من عناصر تحتوي على علامات (<code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>) لتحديد العناوين، الفقرات، والصور.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML+Elements" alt="درس HTML">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson9">
+      <h2>درس 3: تصميم الصفحات باستخدام CSS 🎨</h2>
+      <p>CSS تُستخدم لتصميم صفحات الويب وتحديد الألوان والخطوط والتخطيطات.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson10">
+      <h2>درس 4: التنسيقات النصية والألوان 🎨</h2>
+      <p>يمكن تغيير الخطوط، حجم النصوص، المحاذاة، والألوان باستخدام خصائص CSS مثل <code>font-family</code>, <code>color</code>, و<code>text-align</code>.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS+Typography" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson11">
+      <h2>درس 5: أساسيات JavaScript ⚡</h2>
+      <p>JavaScript لغة برمجة تُستخدم لإضافة التفاعلية للصفحات مثل الأزرار والنماذج.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson12">
+      <h2>درس 6: المتغيرات والشروط ⚡</h2>
+      <p>المتغيرات تُستخدم لتخزين البيانات، والشروط (<code>if</code>) للتحكم في سير البرنامج بناءً على القيم.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript+Variables" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+    <div class="lesson" id="lesson13">
+      <h2>درس 1: أساسيات HTML 📝</h2>
+      <p>HTML هي لغة ترميز تُستخدم لبناء هيكل صفحات الويب.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML" alt="درس HTML">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson14">
+      <h2>درس 2: العناصر والعلامات الأساسية 📝</h2>
+      <p>تتكون صفحات HTML من عناصر تحتوي على علامات (<code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>) لتحديد العناوين، الفقرات، والصور.</p>
+      <img src="https://via.placeholder.com/400x200?text=HTML+Elements" alt="درس HTML">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson15">
+      <h2>درس 3: تصميم الصفحات باستخدام CSS 🎨</h2>
+      <p>CSS تُستخدم لتصميم صفحات الويب وتحديد الألوان والخطوط والتخطيطات.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson16">
+      <h2>درس 4: التنسيقات النصية والألوان 🎨</h2>
+      <p>يمكن تغيير الخطوط، حجم النصوص، المحاذاة، والألوان باستخدام خصائص CSS مثل <code>font-family</code>, <code>color</code>, و<code>text-align</code>.</p>
+      <img src="https://via.placeholder.com/400x200?text=CSS+Typography" alt="درس CSS">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson17">
+      <h2>درس 5: أساسيات JavaScript ⚡</h2>
+      <p>JavaScript لغة برمجة تُستخدم لإضافة التفاعلية للصفحات مثل الأزرار والنماذج.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+
+    <div class="lesson" id="lesson18">
+      <h2>درس 6: المتغيرات والشروط ⚡</h2>
+      <p>المتغيرات تُستخدم لتخزين البيانات، والشروط (<code>if</code>) للتحكم في سير البرنامج بناءً على القيم.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript+Variables" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="nextLesson()">next</button>
+      </div>
+    </div>
+    <div class="lesson" id="lesson19">
+      <h2>درس 6: المتغيرات والشروط ⚡</h2>
+      <p>المتغيرات تُستخدم لتخزين البيانات، والشروط (<code>if</code>) للتحكم في سير البرنامج بناءً على القيم.</p>
+      <img src="https://via.placeholder.com/400x200?text=JavaScript+Variables" alt="درس JavaScript">
+      <div>
+        <button onclick="prevLesson()">back</button>
+        <button onclick="startTest()">Frontend Assessment</button>
       </div>
     </div>
   </div>
 </body>
 <script src="app.js"></script>
-                                                                                                                                                           </html>
+</html>
