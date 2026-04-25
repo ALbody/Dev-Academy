@@ -733,32 +733,37 @@ function checkFinalAssessment(username, questions) {
   showAssessmentPanel(html);
 }
 
-function downloadCertificate(name, score) {
-  const win = window.open();
-  win.document.write(`
-    <html>
-    <head>
-      <title>Certificate - ${name}</title>
-      <style>
-        body { font-family: Arial; text-align: center; padding: 50px; }
-        .cert { border: 3px solid gold; padding: 40px; max-width: 700px; margin: 0 auto; }
-        h1 { color: #2A3FE5; }
-        .score { font-size: 24px; color: #16A34A; }
-      </style>
-    </head>
-    <body>
-      <div class="cert">
-        <h1>🎓 Certificate of Completion</h1>
-        <h2>${name}</h2>
-        <p>has successfully completed the Mobile Development Assessment</p>
-        <p class="score">Score: ${score}%</p>
-        <p>Date: ${new Date().toLocaleDateString('ar-SA')}</p>
-      </div>
-    </body>
-    </html>
-  `);
-  win.document.close();
-}
+function downloadCert(course, score, grade, studentName) {
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate</title><style>
+body{font-family:'Georgia',serif;background:#f5f5f5;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+.cert{border:5px solid #ffd60a;border-radius:20px;padding:60px 100px;max-width:750px;text-align:center;position:relative;background:linear-gradient(145deg,#ffffff,#fff8dc);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.cert::before{content:'';position:absolute;top:10px;left:10px;right:10px;bottom:10px;border:2px solid #ffd60a;border-radius:16px;pointer-events:none}
+h1{color:#ff6b35;font-size:2.5rem;margin-bottom:12px}
+.badge{font-size:5rem;margin:20px 0}
+.student{font-size:2.2rem;color:#7c3aed;font-weight:700;margin:16px 0}
+.grade{color:#06d6a0;font-size:1.5rem;font-weight:700;margin-top:14px}
+.date{color:#555;font-size:0.95rem;margin-top:12px}
+.signature{margin-top:40px}
+.cert-seal { width: 90px; height: 90px; border-radius: 50%; position: absolute; top: 10px; right: 20px; background: radial-gradient(circle at 30% 30%, #ffd700, #cfa000 80%); border: 2px solid #b8860b; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: #fff; text-align: center; transform: rotate(-10deg); text-shadow: 0 1px 2px rgba(0,0,0,0.4); z-index: 10; }
+.signature .line{width:180px;margin:0 auto 6px;border-top:1.5px solid #000}
+.signature .name{font-size:1rem;color:#000;font-weight:600}
+.signature .role{font-size:0.8rem;color:#555}
+.seal{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.85rem;text-align:center;line-height:1.2;position:absolute;top:20px;right:40px;background:radial-gradient(circle at 30% 30%,#ffd700,#cfa000 80%);box-shadow:0 6px 15px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.4);border:3px solid #b8860b;transform:rotate(-10deg);text-shadow:0 1px 2px rgba(0,0,0,0.4)}
+</style></head><body>
+<div class="cert">
+  <div class="seal">عبدالله صلاح<br>Instructor</div>
+  <div class="badge">🏆</div>
+  <p style="font-size:.85rem;text-transform:uppercase;letter-spacing:.25em;color:#888">Certificate of Completion</p>
+  <h1>${course.title}</h1>
+  <p style="color:#666;margin-bottom:10px">Awarded to</p>
+  <div class="student">${studentName}</div>
+  <p style="color:#666;margin-bottom:10px">has successfully completed this course</p>
+  <div class="grade">Grade: ${grade} · ${score}%</div>
+  <div class="date">Issued: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <div class="date">BodaAcademy · Frontend Mastery Program</div>
+  <div class="signature"><div class="line"></div><div class="name">عبدالله صلاح</div><div class="role">Instructor / Supervisor</div></div>
+</div>
+</body></html>`;
 
 function goBackHome() {
   removeAssessmentPanel();
@@ -786,3 +791,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+}
