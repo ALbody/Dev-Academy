@@ -1,7 +1,5 @@
 
-// ===============================
-// LESSON DATA STRUCTURE
-// ===============================
+
 const lessonsData = {
   lesson1: { title: 'Introduction to Flutter', section: 'Flutter', content: 'Introduction to Flutter and its core features.' },
   lesson2: { title: 'Widgets Deep Dive', section: 'Flutter', content: 'Everything in Flutter is a Widget.' },
@@ -20,9 +18,7 @@ const lessonsData = {
   lesson18: { title: 'Asynchronous Programming', section: 'Dart', content: 'Asynchronous Programming.' }
 };
 
-// ===============================
-// SECTION-BASED ASSESSMENTS
-// ===============================
+
 const sectionsData = {
   Flutter: {
     name: 'Flutter',
@@ -34,11 +30,11 @@ const sectionsData = {
     },
     quiz: {
       questions: [
-        { q: 'Flutter is:', options: ['A programming language', 'A Framework', 'An IDE'], answer: 1 },
-        { q: 'The basic Widget is:', options: ['Container', 'StatelessWidget', 'BuildContext'], answer: 1 },
-        { q: 'Row arranges elements:', options: ['Vertically', 'Horizontally', 'Diagonally'], answer: 1 },
-        { q: 'setState is used for:', options: ['Creating Widget', 'Updating UI', 'Searching'], answer: 1 },
-        { q: 'Navigator.push is used for:', options: ['Removing', 'Adding', 'Updating'], answer: 1 }
+        { q: 'Kotlin is mainly developed by:', options: ['Google', 'JetBrains', 'Microsoft'], answer: 1 },
+        { q: 'Kotlin supports:', options: ['Only OOP', 'OOP and Functional', 'Only Functional'], answer: 1 },
+        { q: 'fun keyword is used for:', options: ['Variables', 'Functions', 'Classes'], answer: 1 },
+        { q: 'Extension functions are used to:', options: ['Delete code', 'Extend classes', 'Run apps'], answer: 1 },
+        { q: 'Kotlin can run on JVM:', options: ['True', 'False', 'Only Android'], answer: 0 },
       ]
     }
   },
@@ -56,7 +52,7 @@ const sectionsData = {
         { q: 'val means:', options: ['Variable', 'Constant', 'Function'], answer: 1 },
         { q: 'init is a:', options: ['Function', 'Variable', 'Code block'], answer: 2 },
         { q: 'Activity is a:', options: ['Interface', 'Data', 'Service'], answer: 0 },
-        { q: 'Kotlin is safe from:', options: ['Errors', 'NullPointerException', 'Warnings'], answer: 1 }
+        { q: 'Kotlin is safe from:', options: ['Errors', 'NullPointerException', 'Warnings'], answer: 1 },
       ]
     }
   },
@@ -70,19 +66,17 @@ const sectionsData = {
     },
     quiz: {
       questions: [
-        { q: 'Dart is a:', options: ['Low performance', 'High performance', 'Medium'], answer: 1 },
-        { q: 'for is used for:', options: ['Condition', 'Iteration', 'Function'], answer: 1 },
-        { q: 'class defines:', options: ['Variable', 'Template', 'Function'], answer: 1 },
-        { q: 'async/await for:', options: ['Constants', 'Long operations', 'Loops'], answer: 1 },
-        { q: 'Dart develops:', options: ['Web only', 'Mobile only', 'Web and Mobile'], answer: 2 }
+        { q: 'Flutter is based on:', options: ['Java', 'Dart', 'Kotlin'], answer: 1 },
+        { q: 'Dart is developed by:', options: ['Apple', 'Google', 'Meta'], answer: 1 },
+        { q: 'Everything in Flutter is:', options: ['Widget', 'Class', 'Function'], answer: 0 },
+        { q: 'Hot Reload is used for:', options: ['Delete app', 'Fast UI update', 'Compile errors'], answer: 1 },
+        { q: 'main() in Dart is:', options: ['Entry point', 'Class', 'Widget'], answer: 0 }
       ]
     }
   }
 };
 
-// ===============================
-// STATE CONSTANTS
-// ===============================
+
 const LESSON_STATES = {
   LOCKED: 'locked',
   ACTIVE: 'active',
@@ -97,9 +91,7 @@ const SECTION_STATES = {
   COMPLETED: 'completed'
 };
 
-// ===============================
-// GLOBAL STATE
-// ===============================
+
 let lessonStates = {};
 let sectionStates = {};
 const lessonOrder = Object.keys(lessonsData);
@@ -107,9 +99,7 @@ const sectionOrder = ['Flutter', 'Kotlin', 'Dart'];
 let currentLesson = 0;
 let courseCompleted = false;
 
-// ===============================
-// INITIALIZATION
-// ===============================
+
 function initializeLessonStates() {
   lessonOrder.forEach((lessonId, index) => {
     lessonStates[lessonId] = index === 0 ? LESSON_STATES.ACTIVE : LESSON_STATES.LOCKED;
@@ -120,9 +110,7 @@ function initializeLessonStates() {
   updateSidebarUI();
 }
 
-// ===============================
-// SIDEBAR UI UPDATES
-// ===============================
+
 function updateSidebarUI() {
   document.querySelectorAll('.lesson-list div[data-lesson]').forEach(item => {
     const lessonId = item.getAttribute('data-lesson');
@@ -141,9 +129,7 @@ function updateSidebarUI() {
   });
 }
 
-// ===============================
-// CODE JUDGE VALIDATION
-// ===============================
+
 function validateCodeSubmission(sectionName, userCode) {
   const section = sectionsData[sectionName];
   if (!section || !section.codeJudge) return { passed: false, msg: 'Section not found' };
@@ -156,9 +142,7 @@ function validateCodeSubmission(sectionName, userCode) {
   };
 }
 
-// ===============================
-// SECTION STATE TRANSITIONS
-// ===============================
+
 function transitionSectionState(sectionName, action) {
   const currentState = sectionStates[sectionName];
   const transitions = {
@@ -193,9 +177,7 @@ function getAllSectionLessonsCompleted(sectionName) {
   return section.lessons.every(lessonId => lessonStates[lessonId] === LESSON_STATES.COMPLETED);
 }
 
-// ===============================
-// ASSESSMENT PANEL HELPERS
-// ===============================
+
 function hideAllContent() {
   const intro = document.getElementById('intro');
   if (intro) {
@@ -236,9 +218,7 @@ function removeAssessmentPanel() {
   }
 }
 
-// ===============================
-// SIDEBAR
-// ===============================
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('mainContent');
@@ -269,9 +249,7 @@ function closeSidebar() {
   }
 }
 
-// ===============================
-// SECTIONS
-// ===============================
+
 function toggleSection(el) {
   const list = el.nextElementSibling;
   const arrow = el.querySelector('.arrow');
@@ -287,9 +265,7 @@ function toggleSection(el) {
   }
 }
 
-// ===============================
-// LESSON NAVIGATION
-// ===============================
+
 function showLesson(id) {
   const state = lessonStates[id];
   const lessonEl = document.getElementById(id);
@@ -314,9 +290,7 @@ function move() {
   showLesson('lesson1');
 }
 
-// ===============================
-// LESSON COMPLETION
-// ===============================
+
 function completeLessonContent(lessonId) {
   lessonStates[lessonId] = LESSON_STATES.COMPLETED;
   updateLessonUI(lessonId);
@@ -338,9 +312,7 @@ function updateLessonUI(lessonId) {
   }
 }
 
-// ===============================
-// NEXT / PREV LESSON
-// ===============================
+
 function nextLesson() {
   const lessonId = lessonOrder[currentLesson];
   const lesson = lessonsData[lessonId];
@@ -369,9 +341,7 @@ function prevLesson() {
   showLesson(lessonOrder[currentLesson - 1]);
 }
 
-// ===============================
-// SECTION ASSESSMENT DISPLAY
-// ===============================
+
 function showSectionFinalBlock(sectionName) {
   hideAllContent();
   let html = '<div class="section-final-block">';
@@ -386,9 +356,7 @@ function showSectionFinalBlock(sectionName) {
   showAssessmentPanel(html);
 }
 
-// ===============================
-// SECTION CODE JUDGE
-// ===============================
+
 function showSectionCodeJudge(sectionName) {
   if (!canAccessSectionJudge(sectionName)) {
     alert('Complete all lessons in this section first!');
@@ -432,9 +400,7 @@ function submitSectionCodeJudge(sectionName) {
   }
 }
 
-// ===============================
-// SECTION QUIZ
-// ===============================
+
 function showSectionQuiz(sectionName) {
   if (!canAccessSectionQuiz(sectionName)) {
     alert('Complete Code Judge first!');
@@ -524,9 +490,7 @@ function goBackHome() {
   window.scrollTo(0, 0);
 }
 
-// ===============================
-// FINAL ASSESSMENT
-// ===============================
+
 function startFinalAssessment() {
   if (!courseCompleted) {
     alert('You must complete all sections first!');
@@ -585,9 +549,7 @@ function checkFinalAssessment() {
   showAssessmentPanel(html);
 }
 
-// ===============================
-// CERTIFICATE DOWNLOAD
-// ===============================
+
 function downloadCertificate(studentName, score, grade) {
   const courseTitle = 'Mobile Development Assessment';
   const certHtml = `<!DOCTYPE html>
@@ -722,18 +684,14 @@ h1 {
   alert('Certificate downloaded successfully!');
 }
 
-// ===============================
-// SEARCH FUNCTIONALITY
-// ===============================
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize lesson states
   try {
     initializeLessonStates();
   } catch (error) {
     console.error('Failed to initialize lesson states:', error);
   }
 
-  // Setup search input listener
   const input = document.getElementById("searchInput");
   if (input) {
     input.addEventListener("input", function () {
@@ -749,7 +707,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn('Search input element not found (id: searchInput)');
   }
 
-  // Validate critical DOM elements exist
   const criticalElements = ['sidebar', 'mainContent', 'intro'];
   criticalElements.forEach(id => {
     const element = document.getElementById(id);
