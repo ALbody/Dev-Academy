@@ -197,34 +197,76 @@ function getAllSectionLessonsCompleted(sectionName) {
 // ASSESSMENT PANEL HELPERS
 // ===============================
 function hideAllContent() {
-  document.getElementById('intro').style.display = 'none';
-  document.querySelectorAll('.lesson').forEach(l => l.style.display = 'none');
+  const intro = document.getElementById('intro');
+  if (intro) {
+    intro.style.display = 'none';
+  }
+  
+  document.querySelectorAll('.lesson').forEach(l => {
+    if (l) {
+      l.style.display = 'none';
+    }
+  });
 }
 
 function showAssessmentPanel(html) {
+  if (!html) {
+    console.error('Assessment panel HTML is empty');
+    return;
+  }
+  
   removeAssessmentPanel();
+  const mainContent = document.getElementById('mainContent');
+  
+  if (!mainContent) {
+    console.error('Main content element not found - cannot show assessment panel');
+    return;
+  }
+  
   const panel = document.createElement('div');
   panel.id = 'assessment-panel';
   panel.innerHTML = html;
-  document.getElementById('mainContent').appendChild(panel);
+  mainContent.appendChild(panel);
 }
 
 function removeAssessmentPanel() {
   const panel = document.getElementById('assessment-panel');
-  if (panel) panel.remove();
+  if (panel) {
+    panel.remove();
+  }
 }
 
 // ===============================
 // SIDEBAR
 // ===============================
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('show');
-  document.getElementById('mainContent').classList.toggle('shift');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+  
+  if (sidebar) {
+    sidebar.classList.toggle('show');
+  } else {
+    console.warn('Sidebar element not found');
+  }
+  
+  if (mainContent) {
+    mainContent.classList.toggle('shift');
+  } else {
+    console.warn('Main content element not found');
+  }
 }
 
 function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('show');
-  document.getElementById('mainContent').classList.remove('shift');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+  
+  if (sidebar) {
+    sidebar.classList.remove('show');
+  }
+  
+  if (mainContent) {
+    mainContent.classList.remove('shift');
+  }
 }
 
 // ===============================
@@ -684,15 +726,35 @@ h1 {
 // SEARCH FUNCTIONALITY
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
-  initializeLessonStates();
+  // Initialize lesson states
+  try {
+    initializeLessonStates();
+  } catch (error) {
+    console.error('Failed to initialize lesson states:', error);
+  }
+
+  // Setup search input listener
   const input = document.getElementById("searchInput");
   if (input) {
     input.addEventListener("input", function () {
       const value = this.value.toLowerCase();
       document.querySelectorAll(".lesson-list div[data-lesson]").forEach(item => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(value) ? "block" : "none";
+        if (item) {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(value) ? "block" : "none";
+        }
       });
     });
+  } else {
+    console.warn('Search input element not found (id: searchInput)');
   }
+
+  // Validate critical DOM elements exist
+  const criticalElements = ['sidebar', 'mainContent', 'intro'];
+  criticalElements.forEach(id => {
+    const element = document.getElementById(id);
+    if (!element) {
+      console.warn(`Critical DOM element missing: ${id}`);
+    }
+  });
 });
