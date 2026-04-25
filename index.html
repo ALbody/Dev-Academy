@@ -1,115 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Boda Academy - Mobile Development Assessment</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <header>
-  <h1>Boda-Academy 💻</h1>
-  <button class="menu" onclick="toggleSidebar()">☰</button>
+  <h1>Boda-Academy</h1>
+  <button class="menu" onclick="toggleSidebar()" aria-label="Toggle Menu">&#9776;</button>
 </header>
 
 <div class="sidebar" id="sidebar">
-  <h2>Mobile Development Assessment</h2>
+  <h2>Mobile Development</h2>
+  <input type="text" id="searchInput" class="search-input" placeholder="Search lessons...">
 
-  <!-- SEARCH -->
-  <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن درس...">
-
-  <!-- FLUTTER -->
   <div class="section">
-    <div class="section-title" onclick="toggleSection(this)">
-      Flutter 📱 <span class="arrow">&#9654;</span>
+    <div class="section-title" onclick="toggleSection(this)" tabindex="0" role="button" aria-expanded="false">
+      Flutter <span class="arrow">&#9654;</span>
     </div>
-
     <div class="lesson-list">
-      <div onclick="showLesson('lesson1')">Introduction to Flutter</div>
-      <div onclick="showLesson('lesson2')">Widgets Deep Dive</div>
-      <div onclick="showLesson('lesson3')">Layouts System</div>
-      <div onclick="showLesson('lesson4')">State Management</div>
-      <div onclick="showLesson('lesson5')">Navigation System</div>
-      <div onclick="showLesson('lesson6')">Forms & Validation</div>
-      <div onclick="showLesson('lesson7')">API Integration</div>
+      <div onclick="showLesson('lesson1')" data-lesson="lesson1">1. Introduction to Flutter</div>
+      <div onclick="showLesson('lesson2')" data-lesson="lesson2">2. Widgets Deep Dive</div>
+      <div onclick="showLesson('lesson3')" data-lesson="lesson3">3. Layouts System</div>
+      <div onclick="showLesson('lesson4')" data-lesson="lesson4">4. State Management</div>
+      <div onclick="showLesson('lesson5')" data-lesson="lesson5">5. Navigation System</div>
+      <div onclick="showLesson('lesson6')" data-lesson="lesson6">6. Forms & Validation</div>
+      <div onclick="showLesson('lesson7')" data-lesson="lesson7">7. API Integration</div>
       <div class="final-evaluation" onclick="showSectionFinalBlock('Flutter')">
-        <span class="eval-icon">🏆</span> Final Evaluation
+        <span class="eval-icon">*</span> Final Evaluation
       </div>
     </div>
   </div>
 
-  <!-- KOTLIN -->
   <div class="section">
-    <div class="section-title" onclick="toggleSection(this)">
-      Kotlin 🤖 <span class="arrow">&#9654;</span>
+    <div class="section-title" onclick="toggleSection(this)" tabindex="0" role="button" aria-expanded="false">
+      Kotlin <span class="arrow">&#9654;</span>
     </div>
-
     <div class="lesson-list">
-      <div onclick="showLesson('lesson10')">Kotlin Introduction</div>
-      <div onclick="showLesson('lesson11')">Variables & Types</div>
-      <div onclick="showLesson('lesson12')">Functions & OOP</div>
-      <div onclick="showLesson('lesson13')">Android Components</div>
+      <div onclick="showLesson('lesson10')" data-lesson="lesson10">10. Kotlin Introduction</div>
+      <div onclick="showLesson('lesson11')" data-lesson="lesson11">11. Variables & Types</div>
+      <div onclick="showLesson('lesson12')" data-lesson="lesson12">12. Functions & OOP</div>
+      <div onclick="showLesson('lesson13')" data-lesson="lesson13">13. Android Components</div>
       <div class="final-evaluation" onclick="showSectionFinalBlock('Kotlin')">
-        <span class="eval-icon">🏆</span> Final Evaluation
+        <span class="eval-icon">*</span> Final Evaluation
       </div>
     </div>
   </div>
 
-  <!-- DART -->
   <div class="section">
-    <div class="section-title" onclick="toggleSection(this)">
-      Dart ⚡ <span class="arrow">&#9654;</span>
+    <div class="section-title" onclick="toggleSection(this)" tabindex="0" role="button" aria-expanded="false">
+      Dart <span class="arrow">&#9654;</span>
     </div>
-
     <div class="lesson-list">
-      <div onclick="showLesson('lesson15')">Dart Basics</div>
-      <div onclick="showLesson('lesson16')">Control Flow</div>
-      <div onclick="showLesson('lesson17')">Object Oriented Programming</div>
-      <div onclick="showLesson('lesson18')">Asynchronous Programming</div>
+      <div onclick="showLesson('lesson15')" data-lesson="lesson15">15. Dart Basics</div>
+      <div onclick="showLesson('lesson16')" data-lesson="lesson16">16. Control Flow</div>
+      <div onclick="showLesson('lesson17')" data-lesson="lesson17">17. Object Oriented Programming</div>
+      <div onclick="showLesson('lesson18')" data-lesson="lesson18">18. Asynchronous Programming</div>
       <div class="final-evaluation" onclick="showSectionFinalBlock('Dart')">
-        <span class="eval-icon">🏆</span> Final Evaluation
+        <span class="eval-icon">*</span> Final Evaluation
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title" onclick="startFinalAssessment()">
-      🏆 Final Assessment
+    <div class="section-title final-evaluation" onclick="startFinalAssessment()">
+      <span class="eval-icon">*</span> Final Assessment
     </div>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main" id="mainContent">
 
   <div class="intro" id="intro">
-    <h2>وحدة تطوير تطبيقات الموبايل</h2>
-    <p>مسار تعليمي تدريجي يعتمد على إكمال كل درس ثم اجتياز اختبار قبل الانتقال.</p>
-    <p style="font-size: 12px; color: #aaa;">Each lesson requires:<br>1️⃣ Learn Content • 2️⃣ Code Judge • 3️⃣ Pass Quiz</p>
-    <button class="menu-btn" onclick="move()">ابدأ التعلم</button>
+    <h2>Mobile Development Track</h2>
+    <p>A progressive learning path where you complete each lesson and pass assessments before advancing.</p>
+    <p style="font-size: 10px; color: #aaa; line-height: 2;">Each lesson requires:<br>1. Learn Content &bull; 2. Code Judge &bull; 3. Pass Quiz</p>
+    <button class="menu-btn" onclick="move()">Start Learning</button>
   </div>
 
   <!-- FLUTTER LESSONS -->
-
   <div class="lesson" id="lesson1">
     <div class="lesson-header">
       <h2>1. Introduction to Flutter</h2>
       <span class="lesson-state" id="state_lesson1">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>مقدمة عن Flutter والمميزات الأساسية:</p>
+      <p>Introduction to Flutter and its core features:</p>
       <ul>
-        <li>Flutter هو Framework مفتوح المصدر من Google</li>
-        <li>يستخدم Dart كلغة برمجة</li>
-        <li>يوفر تطوير تطبيقات native لـ iOS و Android</li>
-        <li>أداء عالي جداً وواجهات جميلة</li>
+        <li>Flutter is an open-source framework by Google</li>
+        <li>Uses Dart as its programming language</li>
+        <li>Provides native app development for iOS and Android</li>
+        <li>High performance and beautiful UIs</li>
       </ul>
       <button onclick="completeLessonContent('lesson1')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -119,18 +110,18 @@
       <span class="lesson-state" id="state_lesson2">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>كل شيء في Flutter هو Widget:</p>
+      <p>Everything in Flutter is a Widget:</p>
       <ul>
-        <li>Widgets هي العناصر الأساسية في Flutter</li>
-        <li>StatelessWidget و StatefulWidget</li>
-        <li>Widget tree و composition</li>
-        <li>Built-in widgets: Text, Button, Container, إلخ</li>
+        <li>Widgets are the building blocks of Flutter</li>
+        <li>StatelessWidget and StatefulWidget</li>
+        <li>Widget tree and composition</li>
+        <li>Built-in widgets: Text, Button, Container, etc.</li>
       </ul>
       <button onclick="completeLessonContent('lesson2')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -140,18 +131,18 @@
       <span class="lesson-state" id="state_lesson3">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>Row / Column / Stack - نظم التخطيط:</p>
+      <p>Row / Column / Stack - Layout Systems:</p>
       <ul>
-        <li>Row يرتب العناصر أفقياً</li>
-        <li>Column يرتب العناصر عموديًا</li>
-        <li>Stack يرتب العناصر فوق بعضها</li>
-        <li>MainAxisAlignment و CrossAxisAlignment</li>
+        <li>Row arranges elements horizontally</li>
+        <li>Column arranges elements vertically</li>
+        <li>Stack arranges elements on top of each other</li>
+        <li>MainAxisAlignment and CrossAxisAlignment</li>
       </ul>
       <button onclick="completeLessonContent('lesson3')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -161,18 +152,18 @@
       <span class="lesson-state" id="state_lesson4">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>إدارة حالة التطبيق:</p>
+      <p>Managing application state:</p>
       <ul>
-        <li>setState هي أبسط طريقة</li>
-        <li>StatefulWidget و lifecycle</li>
+        <li>setState is the simplest approach</li>
+        <li>StatefulWidget and lifecycle</li>
         <li>Provider pattern</li>
         <li>BLoC pattern</li>
       </ul>
       <button onclick="completeLessonContent('lesson4')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -182,18 +173,18 @@
       <span class="lesson-state" id="state_lesson5">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>التنقل بين الشاشات:</p>
+      <p>Navigating between screens:</p>
       <ul>
         <li>Navigator widget</li>
         <li>Named routes</li>
-        <li>Push و Pop operations</li>
+        <li>Push and Pop operations</li>
         <li>Route arguments</li>
       </ul>
       <button onclick="completeLessonContent('lesson5')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -203,9 +194,9 @@
       <span class="lesson-state" id="state_lesson6">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>إدخال واختبار البيانات:</p>
+      <p>Input and data validation:</p>
       <ul>
-        <li>TextField و TextFormField</li>
+        <li>TextField and TextFormField</li>
         <li>Form validation</li>
         <li>Input decoration</li>
         <li>Keyboard types</li>
@@ -213,8 +204,8 @@
       <button onclick="completeLessonContent('lesson6')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -224,9 +215,9 @@
       <span class="lesson-state" id="state_lesson7">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>ربط API مع التطبيق:</p>
+      <p>Connecting APIs to your app:</p>
       <ul>
-        <li>HTTP package للطلبات</li>
+        <li>HTTP package for requests</li>
         <li>Dio library</li>
         <li>JSON parsing</li>
         <li>Error handling</li>
@@ -234,31 +225,30 @@
       <button onclick="completeLessonContent('lesson7')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
   <!-- KOTLIN LESSONS -->
-
   <div class="lesson" id="lesson10">
     <div class="lesson-header">
       <h2>10. Kotlin Introduction</h2>
       <span class="lesson-state" id="state_lesson10">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>مقدمة عن Kotlin:</p>
+      <p>Introduction to Kotlin:</p>
       <ul>
-        <li>لغة حديثة من JetBrains</li>
-        <li>تعمل على Android</li>
-        <li>توافق كامل مع Java</li>
-        <li>صيغة أنظف وأكثر أماناً</li>
+        <li>Modern language from JetBrains</li>
+        <li>Runs on Android</li>
+        <li>Fully compatible with Java</li>
+        <li>Cleaner and safer syntax</li>
       </ul>
       <button onclick="completeLessonContent('lesson10')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -268,7 +258,7 @@
       <span class="lesson-state" id="state_lesson11">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>المتغيرات والأنواع:</p>
+      <p>Variables and Types:</p>
       <ul>
         <li>val (immutable)</li>
         <li>var (mutable)</li>
@@ -278,8 +268,8 @@
       <button onclick="completeLessonContent('lesson11')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -289,18 +279,18 @@
       <span class="lesson-state" id="state_lesson12">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>الدوال والبرمجة الكائنية:</p>
+      <p>Functions and Object-Oriented Programming:</p>
       <ul>
         <li>Function declaration</li>
-        <li>Class و inheritance</li>
+        <li>Class and inheritance</li>
         <li>Interface</li>
         <li>Extension functions</li>
       </ul>
       <button onclick="completeLessonContent('lesson12')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -310,7 +300,7 @@
       <span class="lesson-state" id="state_lesson13">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>مكونات Android الأساسية:</p>
+      <p>Core Android Components:</p>
       <ul>
         <li>Activity lifecycle</li>
         <li>Fragment</li>
@@ -320,31 +310,30 @@
       <button onclick="completeLessonContent('lesson13')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
   <!-- DART LESSONS -->
-
   <div class="lesson" id="lesson15">
     <div class="lesson-header">
       <h2>15. Dart Basics</h2>
       <span class="lesson-state" id="state_lesson15">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>أساسيات Dart:</p>
+      <p>Dart Basics:</p>
       <ul>
-        <li>Variables و التصريحات</li>
+        <li>Variables and declarations</li>
         <li>Types: int, double, String, bool</li>
         <li>Dynamic typing</li>
-        <li>Dart VM و compilation</li>
+        <li>Dart VM and compilation</li>
       </ul>
       <button onclick="completeLessonContent('lesson15')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -354,7 +343,7 @@
       <span class="lesson-state" id="state_lesson16">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>التحكم في التدفق:</p>
+      <p>Control Flow:</p>
       <ul>
         <li>if/else statements</li>
         <li>switch/case</li>
@@ -364,8 +353,8 @@
       <button onclick="completeLessonContent('lesson16')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -375,9 +364,9 @@
       <span class="lesson-state" id="state_lesson17">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>البرمجة الكائنية:</p>
+      <p>Object-Oriented Programming:</p>
       <ul>
-        <li>Classes و objects</li>
+        <li>Classes and objects</li>
         <li>Inheritance</li>
         <li>Polymorphism</li>
         <li>Abstraction</li>
@@ -385,8 +374,8 @@
       <button onclick="completeLessonContent('lesson17')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 
@@ -396,7 +385,7 @@
       <span class="lesson-state" id="state_lesson18">Stage: Content</span>
     </div>
     <div class="lesson-content">
-      <p>البرمجة غير المتزامنة:</p>
+      <p>Asynchronous Programming:</p>
       <ul>
         <li>Future</li>
         <li>async/await</li>
@@ -406,11 +395,13 @@
       <button onclick="completeLessonContent('lesson18')" class="complete-btn">Complete Lesson Content</button>
     </div>
     <div class="lesson-nav">
-      <button onclick="prevLesson()">← Previous</button>
-      <button onclick="nextLesson()">Next →</button>
+      <button onclick="prevLesson()">&larr; Previous</button>
+      <button onclick="nextLesson()">Next &rarr;</button>
     </div>
   </div>
 </div>
-</body>
+
+
 <script src="app.js"></script>
+</body>
 </html>
