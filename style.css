@@ -1,11 +1,6 @@
 
-  /* ================================================================
-   BODA ACADEMY - DARK BOOTCAMP DESIGN SYSTEM
-   ================================================================ */
 
-/* DESIGN TOKENS */
 :root {
-  /* Color Palette - Dark Bootcamp */
   --bg-primary: #0d1117;
   --bg-secondary: #161b22;
   --bg-tertiary: #21262d;
@@ -20,16 +15,13 @@
   --border-color: #30363d;
   --border-subtle: #21262d;
 
-  /* Legacy variable aliases for JavaScript compatibility */
   --color-success: #3fb950;
   --color-warning: #fb8500;
   --color-danger: #f85149;
 
-  /* Typography */
   --font-mono: 'Fira Code', 'Courier New', monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
-  /* Spacing */
   --sp-xs: 4px;
   --sp-sm: 8px;
   --sp-md: 16px;
@@ -38,16 +30,11 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  /* Sizing */
   --nav-width: 280px;
   --content-max-width: 1200px;
   --header-height: 64px;
   --footer-height: auto;
 }
-
-/* ================================================================
-   GLOBAL STYLES
-   ================================================================ */
 
 * {
   margin: 0;
@@ -66,16 +53,12 @@ body {
   line-height: 1.6;
   letter-spacing: 0.3px;
 
-  /* Flexbox for full-height layout */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ================================================================
-   HEADER STYLES
-   ================================================================ */
 
 header.site-header {
   position: fixed;
@@ -124,7 +107,7 @@ header.site-header {
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #fff; /* أو حسب الثيم */
+  color: #fff; 
   z-index: 1100;
 }
 
@@ -139,9 +122,6 @@ header.site-header {
   outline-offset: 2px;
 }
 
-/* ================================================================
-   NAVIGATION SIDEBAR
-   ================================================================ */
 
 nav.sidebar {
   position: fixed;
@@ -203,7 +183,6 @@ nav.sidebar.show {
   color: var(--text-muted);
 }
 
-/* Curriculum Section */
 .curriculum-section {
   border-bottom: 1px solid var(--border-subtle);
   margin-bottom: 0;
@@ -251,7 +230,6 @@ nav.sidebar.show {
   transform: rotate(90deg);
 }
 
-/* Lesson List */
 .lesson-list {
   display: none;
   flex-direction: column;
@@ -304,7 +282,6 @@ nav.sidebar.show {
   border-right-color: var(--accent-blue);
 }
 
-/* Final Evaluation */
 .final-evaluation {
   padding: var(--sp-sm) var(--sp-lg);
   cursor: pointer;
@@ -343,9 +320,6 @@ nav.sidebar.show {
   gap: var(--sp-sm);
 }
 
-/* ================================================================
-   MAIN CONTENT AREA
-   ================================================================ */
 
 main.main-content {
   flex: 1;
@@ -359,14 +333,10 @@ main.main-content {
   transition: all 0.3s ease;
 }
 
-/* When sidebar is shown - JavaScript adds 'shift' class */
 main.main-content.shift {
   margin-right: var(--nav-width);
 }
 
-/* ================================================================
-   INTRODUCTION SECTION
-   ================================================================ */
 
 section.introduction {
   margin-bottom: var(--sp-3xl);
@@ -405,7 +375,6 @@ section.introduction {
   margin-bottom: var(--sp-lg);
 }
 
-/* Learning Path Section */
 .learning-path {
   margin: var(--sp-xl) 0;
   background: var(--bg-tertiary);
@@ -451,21 +420,17 @@ section.introduction {
   font-weight: bold;
 }
 
-/* CTA Section */
 .cta-section {
   margin-top: var(--sp-xl);
   text-align: center;
 }
 
-/* ================================================================
-   CURRICULUM TRACKS & LESSONS
-   ================================================================ */
+ */
 
 section.curriculum-track {
   margin-bottom: var(--sp-3xl);
 }
 
-/* Article / Lesson Card */
 article.lesson {
   display: none;
   background: var(--bg-secondary);
@@ -481,7 +446,6 @@ article.lesson:hover {
   box-shadow: 0 4px 12px rgba(88, 166, 255, 0.1);
 }
 
-/* Lesson Header */
 .lesson-header {
   display: flex;
   justify-content: space-between;
@@ -520,7 +484,6 @@ article.lesson:hover {
   color: var(--accent-green);
 }
 
-/* Lesson Content */
 .lesson-content {
   padding: var(--sp-xl);
 }
@@ -562,7 +525,6 @@ article.lesson:hover {
   font-weight: bold;
 }
 
-/* Lesson Body */
 .lesson-body {
   margin-bottom: var(--sp-lg);
 }
@@ -607,14 +569,12 @@ article.lesson:hover {
   font-weight: 600;
 }
 
-/* Action Section */
 .action-section {
   margin-top: var(--sp-lg);
   padding-top: var(--sp-lg);
   border-top: 1px solid var(--border-color);
 }
 
-/* Lesson Navigation */
 .lesson-nav {
   display: flex;
   gap: var(--sp-md);
@@ -667,9 +627,6 @@ article.lesson:hover {
   content: " →";
 }
 
-/* ================================================================
-   BUTTON STYLES
-   ================================================================ */
 
 .primary-btn,
 .complete-btn,
@@ -732,9 +689,6 @@ article.lesson:hover {
   color: var(--accent-blue);
 }
 
-/* ================================================================
-   ASSESSMENT STYLES
-   ================================================================ */
 
 #assessment-panel {
   background: var(--bg-secondary);
@@ -785,7 +739,6 @@ article.lesson:hover {
   margin: 0;
 }
 
-/* Assessment Options */
 .assessment-options {
   display: flex;
   gap: var(--sp-lg);
@@ -840,7 +793,6 @@ article.lesson:hover {
   opacity: 0.8;
 }
 
-/* Code Judge */
 .code-judge {
   background: var(--bg-tertiary);
   padding: var(--sp-lg);
@@ -907,7 +859,6 @@ article.lesson:hover {
   border-radius: 4px;
 }
 
-/* Quiz */
 .quiz {
   background: var(--bg-tertiary);
   padding: var(--sp-lg);
@@ -970,9 +921,6 @@ article.lesson:hover {
   flex-wrap: wrap;
 }
 
-/* ================================================================
-   FOOTER STYLES
-   ================================================================ */
 
 footer.site-footer {
   margin-top: auto;
@@ -1034,18 +982,12 @@ footer.site-footer {
   margin: var(--sp-sm) 0;
 }
 
-/* ================================================================
-   ACCESSIBILITY & FOCUS STATES
-   ================================================================ */
 
 :focus-visible {
   outline: 2px solid var(--accent-blue);
   outline-offset: 2px;
 }
 
-/* ================================================================
-   RESPONSIVE DESIGN
-   ================================================================ */
 
 @media (max-width: 768px) {
   :root {
