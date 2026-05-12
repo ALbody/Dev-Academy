@@ -991,32 +991,59 @@ footer.site-footer {
 
 @media (max-width: 768px) {
   :root {
-    --nav-width: 240px;
+    --nav-width: 100vw;
     --sp-lg: 16px;
     --sp-xl: 24px;
   }
 
   header.site-header {
     padding: 0 var(--sp-md);
+    height: 60px;
+  }
+
+  .site-title {
+    font-size: 18px;
+  }
+
+  .site-tagline {
+    font-size: 10px;
   }
 
   .menu {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 24px;
+  }
+
+  nav.sidebar {
+    width: 100vw;
+    max-width: 100%;
   }
 
   main.main-content {
     padding: var(--sp-lg);
+    margin-top: 60px;
+  }
+
+  main.main-content.shift {
+    margin-right: 0;
   }
 
   .lesson-header {
     flex-direction: column;
     align-items: flex-start;
+    padding: var(--sp-lg);
   }
 
   .lesson-header h2 {
     min-width: 100%;
+    font-size: 18px;
+  }
+
+  .lesson-state {
+    font-size: 10px;
+    padding: 6px 8px;
   }
 
   .assessment-options {
@@ -1027,10 +1054,31 @@ footer.site-footer {
     flex: 1;
     width: 100%;
     max-width: none;
+    min-height: 80px;
   }
 
   .section-header h2 {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .intro-article {
+    padding: var(--sp-lg);
+  }
+
+  .learning-objectives,
+  .lesson-body {
+    padding: var(--sp-md);
+  }
+
+  .code-editor {
+    min-height: 200px;
+    font-size: 12px;
+  }
+
+  .nav-btn {
+    min-width: 100px;
+    padding: var(--sp-md);
+    font-size: 12px;
   }
 
   .footer-content {
@@ -1042,39 +1090,163 @@ footer.site-footer {
   :root {
     --sp-lg: 12px;
     --sp-xl: 16px;
+    --sp-md: 10px;
   }
 
   header.site-header {
     padding: 0 var(--sp-sm);
-    height: 56px;
+    height: 52px;
+    gap: 8px;
   }
 
   .site-title {
-    font-size: 16px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
   }
 
   .site-tagline {
-    font-size: 9px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .menu {
+    font-size: 20px;
+  }
+
+  nav.sidebar {
+    width: 100vw;
+    max-width: 100%;
+  }
+
+  .nav-header {
+    padding: 10px 12px 12px;
+  }
+
+  .nav-header h2 {
+    font-size: 14px;
+  }
+
+  .search-input {
+    width: calc(100% - 24px);
+    margin: 0 12px 12px;
+    font-size: 11px;
+    padding: 8px;
   }
 
   main.main-content {
     padding: var(--sp-md);
-    margin-top: 56px;
+    margin-top: 52px;
   }
 
   .section-header h2 {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .intro-article {
+    padding: 12px;
+  }
+
+  .intro-article > p {
+    font-size: 13px;
   }
 
   .lesson-header h2 {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .learning-objectives {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .learning-objectives h3 {
+    font-size: 12px;
+  }
+
+  .lesson-body {
+    margin-bottom: 10px;
+  }
+
+  .lesson-body h3 {
+    font-size: 14px;
+    margin: 8px 0 6px 0;
+  }
+
+  .lesson-body > p {
+    font-size: 13px;
+  }
+
+  .lesson-body li {
+    font-size: 12px;
+    padding: 4px 0 4px 12px;
+  }
+
+  .action-section {
+    margin-top: 10px;
+    padding-top: 10px;
   }
 
   .lesson-nav {
     flex-direction: column;
+    padding: 10px;
+    gap: 8px;
   }
 
   .nav-btn {
     width: 100%;
+    min-width: auto;
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .primary-btn,
+  .submit-btn,
+  .cancel-btn {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  #assessment-panel {
+    padding: var(--sp-lg);
+  }
+
+  .code-editor {
+    min-height: 160px;
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .quiz-question {
+    padding: 10px;
+    margin: 8px 0;
+  }
+
+  .quiz-question label {
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    gap: 8px;
+    margin-top: 12px;
+    flex-direction: column;
+  }
+
+  footer.site-footer {
+    padding: var(--sp-lg) var(--sp-md);
+    font-size: 11px;
+  }
+
+  .footer-content {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .footer-section h3 {
+    font-size: 12px;
   }
 }
